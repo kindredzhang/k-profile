@@ -76,7 +76,7 @@ export default async function BlogPage() {
                     {postsByYear[year].map((post) => (
                       <article key={post.id} className="group transition-all duration-300">
                         <Link 
-                          href={`/posts/${post.slug}`}
+                          href={`/blog/posts/${post.slug}`}
                           className="block py-3 border-b border-border/30 hover:border-primary/30 transition-all duration-300"
                         >
                           <div className="flex items-center justify-between gap-4">

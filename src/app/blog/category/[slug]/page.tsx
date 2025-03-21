@@ -5,9 +5,18 @@ import { Category, PostWithDetails } from '@/lib/supabase';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  // 从数据库获取文章和分类
+export default async function CategoryPage({ 
+  params,
+}: {
+  params: {
+    slug: string;
+  }
+}) {
+  // 从已解析的参数中获取slug
   const slug = params.slug;
+  console.log('Fetching category posts with slug:', slug);
+  
+  // 从数据库获取文章和分类
   const categories = await getAllCategories();
   const posts = await getPostsByCategory(slug);
   // 获取当前分类信息
@@ -85,7 +94,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
                     {postsByYear[year].map((post) => (
                       <article key={post.id} className="group transition-all duration-300">
                         <Link 
-                          href={`/posts/${post.slug}`}
+                          href={`/blog/posts/${post.slug}`}
                           className="block py-3 border-b border-border/30 hover:border-primary/30 transition-all duration-300"
                         >
                           <div className="flex items-center justify-between gap-4">

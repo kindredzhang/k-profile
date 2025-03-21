@@ -59,34 +59,61 @@ export async function getPostsByCategory(categorySlug: string): Promise<PostWith
  * 根据ID获取单篇文章
  */
 export async function getPostBySlug(slug: string): Promise<PostWithDetails | null> {
-  const { data: post, error } = await supabase
-    .from('posts')
-    .select(`
-      *,
-      category:categories(*),
-      tags:post_tags(tag:tags(*))
-    `)
-    .eq('slug', slug)
-    .eq('published', true)
-    .single();
+  try {
+    if (!slug) {
+      console.error('Invalid slug provided:', slug);
+      return null;
+    }
 
-  if (error || !post) {
-    console.error(`Error fetching post with slug ${slug}:`, error);
-    return null;
-  }
+    console.log(`Fetching post with slug: ${slug}`);
+    
+    const { data: post, error } = await supabase
+      .from('posts')
+      .select(`
+        *,
+        category:categories(*),
+        tags:post_tags(tag:tags(*))
+      `)
+      .eq('slug', slug)
+      .eq('published', true)
+      .single();
+
+    if (error) {
+      console.error(`Error fetching post with slug ${slug}:`, error);
+      return null;
+    }
+    
+    if (!post) {
+      console.error(`Post with slug ${slug} not found`);
+      return null;
+    }
 
   // 增加文章浏览次数
-  await supabase
-    .from('posts')
-    .update({ view_count: post.view_count + 1 })
-    .eq('id', post.id);
+  try {
+    await supabase
+      .from('posts')
+      .update({ view_count: post.view_count + 1 })
+      .eq('id', post.id);
+  } catch (updateError) {
+    console.error('Failed to update view count:', updateError);
+    // 继续处理，因为浏览计数错误不应导致整个请求失败
+  }
 
   // 转换嵌套数据结构
-  return {
+  const postWithDetails = {
     ...post,
     category: post.category,
-    tags: post.tags.map((tagRelation: any) => tagRelation.tag)
+    tags: post.tags && Array.isArray(post.tags) 
+      ? post.tags.map((tagRelation: any) => tagRelation.tag) 
+      : []
   };
+  
+  console.log('Successfully fetched post:', post.title);
+  return postWithDetails;
+} catch (error) {
+  console.error(`Unexpected error fetching post with slug ${slug}:`, error);
+  return null;
+}
 }
 
 /**

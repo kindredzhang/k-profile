@@ -6,9 +6,18 @@ import { getPostsByTag, getTagBySlug } from '@/lib/db/tags';
 import { Category, PostWithDetails, Tag } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 
-export default async function TagPage({ params }: { params: { slug: string } }) {
-  // 从数据库获取文章、分类和标签
+export default async function TagPage({ 
+  params,
+}: {
+  params: {
+    slug: string;
+  }
+}) {
+  // 从已解析的参数中获取slug
   const slug = params.slug;
+  console.log('Fetching tag posts with slug:', slug);
+  
+  // 从数据库获取文章、分类和标签
   const categories = await getAllCategories();
   const tag = await getTagBySlug(slug);
   
@@ -86,7 +95,7 @@ export default async function TagPage({ params }: { params: { slug: string } }) 
                     {postsByYear[year].map((post) => (
                       <article key={post.id} className="group transition-all duration-300">
                         <Link 
-                          href={`/posts/${post.slug}`}
+                          href={`/blog/posts/${post.slug}`}
                           className="block py-3 border-b border-border/30 hover:border-primary/30 transition-all duration-300"
                         >
                           <div className="flex items-center justify-between gap-4">
