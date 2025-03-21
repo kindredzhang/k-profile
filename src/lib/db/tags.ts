@@ -1,0 +1,51 @@
+import { supabase, Tag } from '../supabase';
+
+/**
+ * 获取所有标签
+ */
+export async function getAllTags(): Promise<Tag[]> {
+  const { data: tags, error } = await supabase
+    .from('tags')
+    .select('*')
+    .order('name');
+
+  if (error) {
+    console.error('Error fetching tags:', error);
+    return [];
+  }
+
+  return tags;
+}
+
+/**
+ * 根据slug获取标签
+ */
+export async function getTagBySlug(slug: string): Promise<Tag | null> {
+  const { data: tag, error } = await supabase
+    .from('tags')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error) {
+    console.error(`Error fetching tag with slug ${slug}:`, error);
+    return null;
+  }
+
+  return tag;
+}
+
+/**
+ * 获取包含文章数量的标签列表
+ */
+export async function getTagsWithCount(): Promise<(Tag & { post_count: number })[]> {
+  const { data, error } = await supabase
+    .rpc('get_tags_with_post_count');
+
+  if (error) {
+    console.error('Error fetching tags with count:', error);
+    return [];
+  }
+
+  return data;
+}

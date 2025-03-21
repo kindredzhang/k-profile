@@ -1,6 +1,8 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import { getAllPosts, getPostBySlug } from './db';
+import { PostWithDetails } from './supabase';
 
 // 博客文章存储的目录路径
 const postsDirectory = path.join(process.cwd(), 'posts');
@@ -10,6 +12,26 @@ const postsDirectory = path.join(process.cwd(), 'posts');
  */
 export async function getSortedPostsData() {
   try {
+    // 先尝试从数据库获取文章
+    try {
+      const dbPosts = await getAllPosts();
+      console.log(`Found ${dbPosts.length} posts in database`);
+      
+      // 如果从数据库获取到了文章，则转换成旧的格式返回
+      if (dbPosts && dbPosts.length > 0) {
+        return dbPosts.map(post => ({
+          id: post.slug,
+          title: post.title,
+          date: post.published_at || post.created_at,
+          description: post.description || ''
+        }));
+      }
+    } catch (dbError) {
+      console.error('Error getting posts from database:', dbError);
+      // 数据库查询失败，继续使用文件系统
+    }
+    
+    // 还没有从数据库获取到文章，回退到文件系统方式
     // 确保posts目录存在
     if (!fs.existsSync(postsDirectory)) {
       fs.mkdirSync(postsDirectory, { recursive: true });
@@ -88,10 +110,33 @@ export async function getSortedPostsData() {
  * 根据ID获取单篇文章的内容和元数据
  */
 export async function getPostData(id: string) {
-  const fullPath = path.join(postsDirectory, `${id}.md`);
-  console.log(`Attempting to get post data for ID: ${id}, path: ${fullPath}`);
+  console.log(`Attempting to get post data for ID: ${id}`);
   
   try {
+    // 先尝试从数据库获取文章
+    try {
+      const dbPost = await getPostBySlug(id);
+      
+      // 如果从数据库获取到了文章，则返回
+      if (dbPost) {
+        console.log(`Post found in database: ${id}`);
+        return {
+          id,
+          title: dbPost.title,
+          date: dbPost.published_at || dbPost.created_at,
+          description: dbPost.description || '',
+          content: dbPost.content,
+        };
+      }
+    } catch (dbError) {
+      console.error(`Error getting post from database for ${id}:`, dbError);
+      // 数据库查询失败，继续使用文件系统
+    }
+    
+    // 数据库中没有找到文章，回退到文件系统方式
+    const fullPath = path.join(postsDirectory, `${id}.md`);
+    console.log(`Attempting to get post from filesystem: ${fullPath}`);
+    
     // 检查文件是否存在
     if (!fs.existsSync(fullPath)) {
       console.error(`Post with id ${id} not found at path ${fullPath}`);
@@ -123,7 +168,7 @@ export async function getPostData(id: string) {
     const date = matterResult.data.date || new Date().toISOString();
     const description = matterResult.data.description || '';
     
-    // 返回数据
+    // 返回文件系统中的文章数据
     return {
       id,
       title,

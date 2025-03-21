@@ -1,13 +1,39 @@
 import Layout from '@/components/layout/Layout';
 import Link from 'next/link';
 import { BookIcon } from '@/components/ui/icons';
-import { getAllPosts, getAllCategories } from '@/lib/db';
+import { getAllPosts, getAllCategories, getPostsByCategory } from '@/lib/db';
 import { PostWithDetails, Category } from '@/lib/supabase';
+import { notFound } from 'next/navigation';
 
-export default async function BlogPage() {
-  // 从数据库获取文章和分类
-  const posts = await getAllPosts();
+// 获取当前年份
+function getCurrentYear() {
+  return new Date().getFullYear();
+}
+
+// 生成静态页面参数
+export async function generateStaticParams() {
+  // 从数据库获取所有分类
   const categories = await getAllCategories();
+  
+  // 为每个分类创建参数对象
+  return categories.map(category => ({
+    slug: category.slug,
+  }));
+}
+
+export default async function CategoryPage({ params }: { params: { slug: string } }) {
+  // 从数据库获取文章和分类
+  const slug = params.slug;
+  const categories = await getAllCategories();
+  const posts = await getPostsByCategory(slug);
+  
+  // 获取当前分类信息
+  const currentCategory = categories.find(cat => cat.slug === slug);
+  
+  // 如果找不到该分类，返回404
+  if (!currentCategory) {
+    notFound();
+  }
   
   // 按年份分组文章
   const postsByYear = posts.reduce((acc: Record<string, PostWithDetails[]>, post) => {
@@ -42,7 +68,7 @@ export default async function BlogPage() {
                   key={category.id}
                   href={category.slug === 'blog' ? '/blog' : `/blog/category/${category.slug}`}
                   className={`text-lg md:text-xl font-medium pb-2 border-b-2 px-1 transition-all duration-300 
-                    ${category.slug === 'blog' 
+                    ${category.slug === slug 
                       ? 'border-primary text-primary opacity-100' 
                       : 'border-transparent hover:border-primary/40 text-muted-foreground hover:text-primary/80 opacity-40 hover:opacity-90'}`}
                 >
@@ -50,6 +76,14 @@ export default async function BlogPage() {
                 </Link>
               ))}
             </div>
+          </div>
+
+          {/* 分类标题和描述 */}
+          <div className="mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold enhance-text mb-4">{currentCategory.name}</h1>
+            {currentCategory.description && (
+              <p className="text-lg text-muted-foreground">{currentCategory.description}</p>
+            )}
           </div>
 
           {posts.length > 0 ? (
@@ -106,19 +140,15 @@ export default async function BlogPage() {
                                 {/* 添加阅读时间估算 */}
                                 {Math.ceil(post.content.length / 1000)} min
                               </span>
-                              {post.category && (
-                                <>
-                                  <span className="mx-2 text-primary/30">•</span>
-                                  <span className="text-primary/70">{post.category.name}</span>
-                                </>
+                              {post.tags && post.tags.length > 0 && (
+                                <div className="flex flex-wrap gap-1 mt-2">
+                                  {post.tags.map(tag => (
+                                    <span key={tag.id} className="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary">
+                                      #{tag.name}
+                                    </span>
+                                  ))}
+                                </div>
                               )}
-                              <div className="flex flex-wrap gap-1 mt-2">
-                                {post.tags && post.tags.map(tag => (
-                                  <span key={tag.id} className="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary">
-                                    #{tag.name}
-                                  </span>
-                                ))}
-                              </div>
                             </div>
                           </div>
                         </Link>
@@ -131,7 +161,7 @@ export default async function BlogPage() {
           ) : (
             <div className="text-center py-16 enhanced-card bg-card/80 backdrop-blur-sm p-8 rounded-lg border border-border">
               <BookIcon width="48" height="48" className="text-primary/50 mx-auto mb-4" />
-              <p className="text-muted-foreground">暂无博客文章</p>
+              <p className="text-muted-foreground">该分类下暂无文章</p>
             </div>
           )}
         </div>
