@@ -16,10 +16,10 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Kindred的个人博客",
+  title: "Kindred Zhang",
   description: "一个使用Next.js构建的现代化个人博客",
   keywords: ["博客", "技术", "编程", "前端开发", "Next.js"],
-  authors: [{ name: "Kindred" }],
+  authors: [{ name: "Kindred Zhang" }],
 };
 
 export default function RootLayout({

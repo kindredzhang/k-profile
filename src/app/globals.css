@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./ui-enhancements.css";
+@import "./blog/blog-styles.css";
+@import "./background-patterns.css";
 
 @custom-variant dark (&:is(.dark *));
 
