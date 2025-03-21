@@ -52,14 +52,14 @@ export default function SponsorsPage() {
               If you find value in my work, please consider becoming a sponsor.
             </p>
             
-            <div className="mt-8">
+            {/* <div className="mt-8">
               <a 
                 href="https://github.com/sponsors/kindred" 
                 className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-base font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
               >
                 Become a Sponsor
               </a>
-            </div>
+            </div> */}
           </div>
           
           <h2 className="text-2xl font-bold mb-6">Platinum Sponsors</h2>

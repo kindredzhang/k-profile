@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { Tag } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 
 interface TagCloudProps {
   tags: (Tag & { post_count: number })[];
@@ -36,12 +35,10 @@ export default function TagCloud({ tags }: TagCloudProps) {
       <h3 className="text-lg font-medium mb-3">标签云</h3>
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <motion.div
+          <div
             key={tag.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.05 }}
+            className="transition-all duration-300 hover:scale-105"
+            style={{ opacity: 1 }}
           >
             <Link
               href={`/blog/tag/${tag.slug}`}
@@ -51,7 +48,7 @@ export default function TagCloud({ tags }: TagCloudProps) {
               {tag.name}
               <span className="ml-1 text-xs opacity-70">({tag.post_count})</span>
             </Link>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

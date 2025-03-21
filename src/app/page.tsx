@@ -1,6 +1,6 @@
 import Layout from '@/components/layout/Layout';
+import { BookIcon, CodeIcon, PresentationIcon, SendIcon } from '@/components/ui/icons';
 import Link from 'next/link';
-import { BookIcon, CodeIcon, GitHubIcon, PresentationIcon, SendIcon, TwitterIcon } from '@/components/ui/icons';
 
 // 模拟最近博客文章数据
 const recentPosts = [
