@@ -1,103 +1,163 @@
-import Image from "next/image";
+import Layout from '@/components/layout/Layout';
+import Link from 'next/link';
 
+// 模拟最近博客文章数据
+const recentPosts = [
+  {
+    id: 'post-1',
+    title: 'Migrating to Server Components',
+    date: 'Mar 8',
+    url: '/blog/migrating-to-server-components'
+  },
+  {
+    id: 'post-2',
+    title: 'Why I Switched to Bun',
+    date: 'Feb 12',
+    url: '/blog/why-i-switched-to-bun'
+  },
+  {
+    id: 'post-3',
+    title: 'The Future of React Server Components',
+    date: 'Jan 24',
+    url: '/blog/future-of-react-server-components'
+  }
+];
+
+// 模拟精选项目数据
+const featuredProjects = [
+  {
+    id: 'project-1',
+    title: 'Nuxt UI',
+    description: 'A UI Library for Modern Web Applications',
+    url: '/projects/nuxt-ui'
+  },
+  {
+    id: 'project-2',
+    title: 'Vite Plugin Icons',
+    description: 'Use any icon from popular icon sets in Vite projects',
+    url: '/projects/vite-plugin-icons'
+  }
+];
+
+// 首页组件
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <Layout>
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="max-w-5xl mx-auto">
+          {/* Hero Section */}
+          <div className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+            <div className="md:max-w-xl">
+              <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                <span className="text-primary">Hello,</span> I'm Kindred
+              </h1>
+              
+              <p className="text-base md:text-lg text-muted-foreground mb-6 leading-relaxed">
+                Software engineer and open-source creator specializing in modern web technologies.
+                Building developer tools and UI libraries that empower better applications.
+              </p>
+              
+              <div className="flex flex-wrap gap-3">
+                <Link 
+                  href="/blog" 
+                  className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+                >
+                  Read My Blog
+                </Link>
+                <Link 
+                  href="/projects" 
+                  className="inline-flex items-center justify-center rounded-md border border-border bg-background px-5 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-secondary transition-colors"
+                >
+                  View Projects
+                </Link>
+              </div>
+            </div>
+            
+            <div className="hidden md:block relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary/20">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-4xl font-playfair font-bold text-primary/80">
+                K
+              </div>
+            </div>
+          </div>
+          
+          {/* Recent Posts Section */}
+          <div className="mb-12 md:mb-16">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="font-playfair text-xl font-bold">Recent Posts</h2>
+              <Link href="/blog" className="text-primary hover:underline text-sm">View all</Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {recentPosts.map((post) => (
+                <article key={post.id} className="group border border-border rounded-lg overflow-hidden hover:border-primary/30 transition-colors">
+                  <Link href={post.url} className="block p-4">
+                    <time className="text-xs text-primary/80 font-medium mb-2 block">{post.date}</time>
+                    <h3 className="text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{post.title}</h3>
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+          
+          {/* Featured Projects Section */}
+          <div className="mb-12 md:mb-16">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="font-playfair text-xl font-bold">Featured Projects</h2>
+              <Link href="/projects" className="text-primary hover:underline text-sm">View all</Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {featuredProjects.map((project) => (
+                <Link 
+                  key={project.id} 
+                  href={project.url}
+                  className="group block p-4 rounded-lg border border-border bg-card hover:border-primary/30 hover:bg-card/80 transition-all"
+                >
+                  <h3 className="text-base font-medium mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
+                  <p className="text-sm text-muted-foreground">{project.description}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+          
+          {/* About Section */}
+          <div className="mb-12 md:mb-16">
+            <h2 className="font-playfair text-xl font-bold mb-4">About Me</h2>
+            
+            <div className="prose prose-sm prose-invert max-w-none">
+              <p>
+                I'm passionate about creating tools and libraries that help developers build better applications.
+                My focus is on performance, developer experience, and beautiful design.
+              </p>
+              
+              <p>
+                When I'm not coding, you can find me hiking in the mountains, reading science fiction, or experimenting with new cooking recipes.
+              </p>
+              
+              <p>
+                I occasionally <Link href="/talks" className="text-primary hover:underline">speak at conferences</Link> about web development, open source, and developer tools.
+                If you'd like to support my work, consider <Link href="/sponsors" className="text-primary hover:underline">becoming a sponsor</Link>.
+              </p>
+            </div>
+          </div>
+          
+          {/* Newsletter Section */}
+          <div className="p-5 rounded-lg border border-primary/20 bg-primary/5">
+            <h2 className="font-playfair text-lg font-bold mb-2">Subscribe to my newsletter</h2>
+            <p className="text-sm text-muted-foreground mb-3">Get notified about new articles, projects and updates.</p>
+            <div className="flex gap-2">
+              <input 
+                type="email" 
+                placeholder="Your email address" 
+                className="flex-1 px-3 py-2 text-sm rounded-md border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+              <button className="px-4 py-2 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+                Subscribe
+              </button>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </Layout>
   );
 }
