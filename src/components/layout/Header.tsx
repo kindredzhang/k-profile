@@ -3,23 +3,23 @@ import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Header() {
   return (
-    <header className="w-full border-b border-border bg-background/80 backdrop-blur-md py-3">
+    <header className="w-full border-b border-border bg-background/60 backdrop-blur-xl py-4 sticky top-0 z-50 transition-all duration-300 shadow-sm">
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link href="/" className="font-playfair text-xl font-bold text-foreground hover:text-primary transition-colors">
           Kindred
         </Link>
         
         <nav className="hidden md:flex space-x-6">
-          <Link href="/blog" className="text-muted-foreground font-light hover:text-primary transition-colors">
+          <Link href="/blog" className="nav-link text-muted-foreground font-light hover:text-primary transition-colors">
             Blog
           </Link>
-          <Link href="/projects" className="text-muted-foreground font-light hover:text-primary transition-colors">
+          <Link href="/projects" className="nav-link text-muted-foreground font-light hover:text-primary transition-colors">
             Projects
           </Link>
-          <Link href="/talks" className="text-muted-foreground font-light hover:text-primary transition-colors">
+          <Link href="/talks" className="nav-link text-muted-foreground font-light hover:text-primary transition-colors">
             Talks
           </Link>
-          <Link href="/sponsors" className="text-muted-foreground font-light hover:text-primary transition-colors">
+          <Link href="/sponsors" className="nav-link text-muted-foreground font-light hover:text-primary transition-colors">
             Sponsors
           </Link>
         </nav>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import MouseGlow from "@/components/effects/MouseGlow";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,8 +29,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <head />
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            function getThemePreference() {
+              if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+              }
+              return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            
+            const theme = getThemePreference();
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            document.body.classList.toggle('dark', theme === 'dark');
+          })();
+        `}} />
+      </head>
+      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased relative overflow-x-hidden`}>
+        <MouseGlow />
         {children}
       </body>
     </html>
