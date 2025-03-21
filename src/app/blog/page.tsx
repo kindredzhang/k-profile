@@ -1,16 +1,13 @@
 import Layout from '@/components/layout/Layout';
-import Link from 'next/link';
 import { BookIcon } from '@/components/ui/icons';
-import { getAllPosts, getAllCategories } from '@/lib/db';
-import { getTagsWithCount } from '@/lib/db/tags';
-import { PostWithDetails, Category } from '@/lib/supabase';
-import TagCloud from '@/components/blog/TagCloud';
+import { getAllCategories, getAllPosts } from '@/lib/db';
+import { Category, PostWithDetails } from '@/lib/supabase';
+import Link from 'next/link';
 
 export default async function BlogPage() {
   // 从数据库获取文章、分类和标签
   const posts = await getAllPosts();
   const categories = await getAllCategories();
-  const tagsWithCount = await getTagsWithCount();
   
   // 按年份分组文章
   const postsByYear = posts.reduce((acc: Record<string, PostWithDetails[]>, post) => {
@@ -53,11 +50,6 @@ export default async function BlogPage() {
                 </Link>
               ))}
             </div>
-          </div>
-
-          {/* 标签云 */}
-          <div className="mb-8">
-            <TagCloud tags={tagsWithCount} />
           </div>
 
           {posts.length > 0 ? (

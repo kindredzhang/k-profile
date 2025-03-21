@@ -2,7 +2,6 @@ import ProgressWrapper from '@/components/blog/ProgressWrapper';
 import Layout from '@/components/layout/Layout';
 import { BookIcon } from '@/components/ui/icons';
 import { getAllPosts, getPostBySlug } from '@/lib/db';
-// Using a safer approach to render markdown
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -18,14 +17,13 @@ export async function generateStaticParams() {
   }));
 }
 
+interface PageProps {
+  params: { slug: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
+}
+
 // 博客文章详情页面
-export default async function Post({ 
-  params,
-}: {
-  params: {
-    slug: string;
-  }
-}) {
+export default async function Post({ params }: PageProps) {
   try {
     // 从已解析的参数中获取slug (不需要await，因为在函数参数中已经解构)
     const slug = params.slug;
