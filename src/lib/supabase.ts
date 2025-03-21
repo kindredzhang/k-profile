@@ -39,6 +39,15 @@ export type Tag = {
   slug: string;
 };
 
+export type Photo = {
+  id: number;
+  title: string | null;
+  description: string | null;
+  url: string;
+  created_at: string;
+  updated_at: string;
+};
+
 // 完整的文章类型（包含分类和标签）
 export type PostWithDetails = Post & {
   category: Category | null;

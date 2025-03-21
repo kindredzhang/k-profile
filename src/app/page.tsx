@@ -44,10 +44,10 @@ const featuredProjects = [
 export default function Home() {
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-12 md:py-16">
+      <div className="container mx-auto px-4 py-6 md:py-8">
         <div className="max-w-5xl mx-auto">
           {/* Hero Section */}
-          <div className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <div className="mb-10 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="md:max-w-xl">
               <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4 leading-tight">
                 <span className="text-primary">Hello,</span> I'm Kindred

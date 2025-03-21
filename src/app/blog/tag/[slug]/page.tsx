@@ -1,19 +1,26 @@
 import Layout from '@/components/layout/Layout';
 import Link from 'next/link';
 import { BookIcon } from '@/components/ui/icons';
-import { getAllPosts, getAllCategories } from '@/lib/db';
-import { getTagsWithCount } from '@/lib/db/tags';
-import { PostWithDetails, Category } from '@/lib/supabase';
-import TagCloud from '@/components/blog/TagCloud';
+import { getAllCategories } from '@/lib/db';
+import { getPostsByTag, getTagBySlug } from '@/lib/db/tags';
+import { Category, PostWithDetails, Tag } from '@/lib/supabase';
+import { notFound } from 'next/navigation';
 
-export default async function BlogPage() {
+export default async function TagPage({ params }: { params: { slug: string } }) {
   // 从数据库获取文章、分类和标签
-  const posts = await getAllPosts();
+  const slug = params.slug;
   const categories = await getAllCategories();
-  const tagsWithCount = await getTagsWithCount();
+  const tag = await getTagBySlug(slug);
+  
+  // 如果找不到该标签，返回404
+  if (!tag) {
+    notFound();
+  }
+  
+  const posts = await getPostsByTag(slug);
   
   // 按年份分组文章
-  const postsByYear = posts.reduce((acc: Record<string, PostWithDetails[]>, post) => {
+  const postsByYear = posts.reduce((acc: Record<string, PostWithDetails[]>, post: PostWithDetails) => {
     // 使用published_at或created_at获取年份
     const date = post.published_at || post.created_at;
     const year = new Date(date).getFullYear().toString();
@@ -37,7 +44,7 @@ export default async function BlogPage() {
         </div>
         
         <div className="relative z-10">
-          {/* 分类标签导航 - 更紧凑的设计 */}
+          {/* 分类标签导航 */}
           <div className="flex items-center mb-4 border-b border-border pb-2">
             <div className="flex gap-4 md:gap-6 overflow-x-auto">
               {categories.map((category: Category) => (
@@ -45,9 +52,7 @@ export default async function BlogPage() {
                   key={category.id}
                   href={category.slug === 'blog' ? '/blog' : `/blog/category/${category.slug}`}
                   className={`text-base md:text-lg font-medium pb-2 border-b-2 px-1 transition-all duration-300 
-                    ${category.slug === 'blog' 
-                      ? 'border-primary text-primary opacity-100' 
-                      : 'border-transparent hover:border-primary/40 text-muted-foreground hover:text-primary/80 opacity-40 hover:opacity-90'}`}
+                    border-transparent hover:border-primary/40 text-muted-foreground hover:text-primary/80 opacity-40 hover:opacity-90`}
                 >
                   {category.name}
                 </Link>
@@ -55,9 +60,14 @@ export default async function BlogPage() {
             </div>
           </div>
 
-          {/* 标签云 */}
-          <div className="mb-8">
-            <TagCloud tags={tagsWithCount} />
+          {/* 标签标题 */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-primary/20 text-primary">
+                #{tag.name}
+              </span>
+              <span className="text-muted-foreground">({posts.length} 篇文章)</span>
+            </div>
           </div>
 
           {posts.length > 0 ? (
@@ -87,14 +97,14 @@ export default async function BlogPage() {
                               {post.category && (
                                 <div className="text-xs text-muted-foreground mt-1">
                                   {post.category.name}
-                                  {post.tags && post.tags.length > 0 && (
+                                  {post.tags && post.tags.length > 0 && post.tags.filter((t: Tag) => t.id !== tag.id).length > 0 && (
                                     <span className="ml-2">
-                                      {post.tags.slice(0, 2).map((tag, i) => (
-                                        <span key={tag.id} className="text-primary/70">
-                                          {i > 0 && ', '}{tag.name}
+                                      {post.tags.filter((t: Tag) => t.id !== tag.id).slice(0, 2).map((otherTag: Tag, i: number) => (
+                                        <span key={otherTag.id} className="text-primary/70">
+                                          {i > 0 && ', '}{otherTag.name}
                                         </span>
                                       ))}
-                                      {post.tags.length > 2 && <span className="text-muted-foreground"> ...</span>}
+                                      {post.tags.filter((t: Tag) => t.id !== tag.id).length > 2 && <span className="text-muted-foreground"> ...</span>}
                                     </span>
                                   )}
                                 </div>
@@ -117,7 +127,7 @@ export default async function BlogPage() {
           ) : (
             <div className="text-center py-10 bg-card/50 p-6 rounded-lg border border-border/50">
               <BookIcon width="32" height="32" className="text-primary/50 mx-auto mb-3" />
-              <p className="text-muted-foreground">暂无博客文章</p>
+              <p className="text-muted-foreground">该标签下暂无文章</p>
             </div>
           )}
         </div>

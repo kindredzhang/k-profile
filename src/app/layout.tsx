@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import MouseGlow from "@/components/effects/MouseGlow";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-playfair",
-});
+// 使用系统字体变量
+const fontVariables = {
+  variable: '--font-system',
+};
 
 export const metadata: Metadata = {
   title: "Kindred Zhang",
@@ -45,7 +37,7 @@ export default function RootLayout({
           })();
         `}} />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased relative overflow-x-hidden`}>
+      <body className="font-sans antialiased relative overflow-x-hidden">
         <MouseGlow />
         {children}
       </body>
