@@ -5,6 +5,7 @@ import { getAllPosts, getPostBySlug } from '@/lib/db';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
+import { formattedDate } from '@/lib/utils';
 
 // 生成静态页面参数
 export async function generateStaticParams() {
@@ -28,74 +29,54 @@ export default async function Post({ params }: PageProps) {
     // 从已解析的参数中获取slug (需要await，因为params可能是Promise)
     const resolvedParams = await params;
     const slug = resolvedParams.slug;
-    console.log('Fetching post with slug:', slug);
     
     // 安全地从参数中获取文章
     const post = await getPostBySlug(slug);
-    console.log('Fetched post:', post);
 
     // 如果文章不存在则返回404
     if (!post) {
-      console.error('Post not found, redirecting to 404 page');
       notFound();
     }
-  
-    // 格式化日期
-    const formattedDate = new Date(post.published_at || post.created_at).toLocaleDateString('zh-CN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
     
     return (
       <Layout>
         {/* 阅读进度条 */}
         <ProgressWrapper />
         
-        <div className="container mx-auto px-4 py-6 md:py-8 relative">
-          {/* 背景装饰 */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0 opacity-10">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl"></div>
-            <div className="absolute bottom-20 right-10 w-80 h-80 bg-primary/20 rounded-full filter blur-3xl"></div>
+        <div className="container mx-auto px-4 py-4 md:py-6 relative">
+          {/* 背景装饰 - 更微妙的背景效果 */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0 opacity-5">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full filter blur-3xl"></div>
+            <div className="absolute bottom-20 right-10 w-80 h-80 bg-primary/10 rounded-full filter blur-3xl"></div>
           </div>
           
-          <article className="relative z-10 max-w-3xl mx-auto">
-            {/* 返回链接 */}
-            <div className="mb-6">
-              <Link href="/blog" className="text-sm inline-flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors">
-                <BookIcon className="w-4 h-4" />
+          <article className="relative z-10 max-w-2xl mx-auto">
+            {/* 返回链接 - 更小更精致 */}
+            <div className="mb-3">
+              <Link href="/blog" className="text-xs inline-flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors">
+                <BookIcon className="w-3 h-3" />
                 <span>返回博客</span>
               </Link>
             </div>
             
-            {/* 文章标题 */}
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 enhance-text">{post.title}</h1>
+            {/* 文章标题 - 紧凑版本 */}
+            <h1 className="text-2xl md:text-3xl font-bold mb-2 enhance-text leading-tight">{post.title}</h1>
             
-            {/* 元数据 */}
-            <div className="flex flex-wrap gap-3 mb-8">
+            {/* 元数据 - 更紧凑的设计 */}
+            <div className="flex flex-wrap gap-2 mb-4 text-xs">
               {/* 发布日期 */}
-              <div className="text-sm text-muted-foreground">
-                {formattedDate}
+              <div className="text-xs text-muted-foreground">
+                {formattedDate(post.published_at || post.created_at)}
               </div>
-              
-              {/* 分类 */}
-              {post.category && (
-                <Link 
-                  href={`/blog/category/${post.category.slug}`}
-                  className="text-sm text-primary/80 hover:text-primary transition-colors"
-                >
-                  {post.category.name}
-                </Link>
-              )}
-              
+            
               {/* 标签 */}
               {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1">
                   {post.tags.map(tag => (
                     <Link 
                       key={tag.id}
                       href={`/blog/tag/${tag.slug}`}
-                      className="text-xs inline-flex items-center px-2 py-1 rounded-full bg-primary/10 text-primary/80 hover:bg-primary/20 transition-colors"
+                      className="text-xs inline-flex items-center px-1.5 py-0.5 rounded-full bg-primary/5 text-primary/70 hover:bg-primary/10 transition-colors"
                     >
                       #{tag.name}
                     </Link>
@@ -104,8 +85,23 @@ export default async function Post({ params }: PageProps) {
               )}
             </div>
             
-            {/* 文章内容 */}
-            <div className="prose prose-zinc dark:prose-invert max-w-none prose-headings:enhance-text prose-img:rounded-lg">
+            {/* 文章内容 - 更小的字体和优化的间距 */}
+            <div className="prose prose-sm prose-zinc dark:prose-invert max-w-none
+                prose-headings:font-medium prose-headings:enhance-text
+                prose-h1:text-xl prose-h1:mt-6 prose-h1:mb-3
+                prose-h2:text-lg prose-h2:mt-5 prose-h2:mb-2
+                prose-h3:text-base prose-h3:mt-4 prose-h3:mb-2
+                prose-h4:text-sm prose-h4:mt-3 prose-h4:mb-1
+                prose-p:text-sm prose-p:leading-relaxed prose-p:my-2
+                prose-ul:my-2 prose-ol:my-2 prose-li:text-sm
+                prose-li:my-1 prose-li:marker:text-primary/50
+                prose-img:rounded-lg prose-img:my-3
+                prose-a:text-primary/80 hover:prose-a:text-primary
+                prose-pre:text-xs prose-pre:p-3 prose-pre:my-2
+                prose-pre:bg-black/80 prose-pre:leading-relaxed
+                prose-code:text-xs prose-code:bg-primary/10 prose-code:p-0.5 prose-code:rounded
+                prose-blockquote:text-sm prose-blockquote:border-primary/30 prose-blockquote:bg-primary/5 prose-blockquote:py-1 prose-blockquote:px-3 prose-blockquote:rounded-sm
+                prose-strong:text-primary/90 prose-hr:border-border/30">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
           </article>

@@ -64,8 +64,6 @@ export async function getPostBySlug(slug: string): Promise<PostWithDetails | nul
       console.error('Invalid slug provided:', slug);
       return null;
     }
-
-    console.log(`Fetching post with slug: ${slug}`);
     
     const { data: post, error } = await supabase
       .from('posts')
@@ -108,7 +106,6 @@ export async function getPostBySlug(slug: string): Promise<PostWithDetails | nul
       : []
   };
   
-  console.log('Successfully fetched post:', post.title);
   return postWithDetails;
 } catch (error) {
   console.error(`Unexpected error fetching post with slug ${slug}:`, error);

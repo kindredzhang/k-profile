@@ -15,7 +15,6 @@ export async function getSortedPostsData() {
     // 先尝试从数据库获取文章
     try {
       const dbPosts = await getAllPosts();
-      console.log(`Found ${dbPosts.length} posts in database`);
       
       // 如果从数据库获取到了文章，则转换成旧的格式返回
       if (dbPosts && dbPosts.length > 0) {
@@ -35,7 +34,6 @@ export async function getSortedPostsData() {
     // 确保posts目录存在
     if (!fs.existsSync(postsDirectory)) {
       fs.mkdirSync(postsDirectory, { recursive: true });
-      console.log('Created posts directory:', postsDirectory);
       // 创建目录后如果是空的，直接返回空数组
       return [];
     }
@@ -44,7 +42,6 @@ export async function getSortedPostsData() {
     let fileNames: string[] = [];
     try {
       fileNames = fs.readdirSync(postsDirectory);
-      console.log(`Found ${fileNames.length} files in posts directory`);
     } catch (err) {
       console.error('Error reading posts directory:', err);
       return [];
@@ -52,7 +49,6 @@ export async function getSortedPostsData() {
     
     // 如果没有文件，返回空数组
     if (fileNames.length === 0) {
-      console.log('No markdown files found in posts directory');
       return [];
     }
     
@@ -90,7 +86,6 @@ export async function getSortedPostsData() {
       })
       .filter((post): post is { id: string; title: string; date: string; description: string } => post !== null);
     
-    console.log(`Successfully processed ${allPostsData.length} posts`);
     
     // 按日期排序（降序）
     return allPostsData.sort((a, b) => {
@@ -110,7 +105,6 @@ export async function getSortedPostsData() {
  * 根据ID获取单篇文章的内容和元数据
  */
 export async function getPostData(id: string) {
-  console.log(`Attempting to get post data for ID: ${id}`);
   
   try {
     // 先尝试从数据库获取文章
@@ -119,7 +113,6 @@ export async function getPostData(id: string) {
       
       // 如果从数据库获取到了文章，则返回
       if (dbPost) {
-        console.log(`Post found in database: ${id}`);
         return {
           id,
           title: dbPost.title,
@@ -135,7 +128,6 @@ export async function getPostData(id: string) {
     
     // 数据库中没有找到文章，回退到文件系统方式
     const fullPath = path.join(postsDirectory, `${id}.md`);
-    console.log(`Attempting to get post from filesystem: ${fullPath}`);
     
     // 检查文件是否存在
     if (!fs.existsSync(fullPath)) {
@@ -147,7 +139,6 @@ export async function getPostData(id: string) {
     let fileContents: string;
     try {
       fileContents = fs.readFileSync(fullPath, 'utf8');
-      console.log(`Successfully read file contents for ${id}`);
     } catch (err) {
       console.error(`Error reading file for ${id}:`, err);
       throw err;
@@ -157,7 +148,6 @@ export async function getPostData(id: string) {
     let matterResult: matter.GrayMatterFile<string>;
     try {
       matterResult = matter(fileContents);
-      console.log(`Successfully parsed frontmatter for ${id}`);
     } catch (err) {
       console.error(`Error parsing frontmatter for ${id}:`, err);
       throw err;
