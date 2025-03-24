@@ -1,4 +1,5 @@
-import { supabase, Photo } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
+import { Photo } from '@/types';
 
 export type { Photo };
 

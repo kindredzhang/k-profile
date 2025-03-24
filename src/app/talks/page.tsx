@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/Layout';
+import BlogLayout from '@/components/blog/BlogLayout';
 
 // 模拟演讲数据
 const talks = [
@@ -41,48 +41,44 @@ const talks = [
 
 export default function TalksPage() {
   return (
-    <Layout>
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-6xl font-bold mb-8">2025</h1>
-          
-          <div className="space-y-6">
-            {talks.map((talk) => (
-              <div key={talk.id} className="group">
-                <a href={talk.link} className="flex flex-col md:flex-row md:items-center justify-between py-4 border-b border-border">
-                  <div className="flex-1">
-                    <h2 className="text-xl font-medium group-hover:text-primary transition-colors">{talk.title}</h2>
-                  </div>
-                  <div className="flex items-center space-x-4 text-muted-foreground text-sm mt-2 md:mt-0">
-                    <span>{talk.date}</span>
-                    <span>·</span>
-                    <span>{talk.duration}</span>
-                  </div>
-                </a>
+    <BlogLayout title="Talks">
+      <h1 className="text-6xl font-bold mb-8">2025</h1>
+      
+      <div className="space-y-6">
+        {talks.map((talk) => (
+          <div key={talk.id} className="group">
+            <a href={talk.link} className="flex flex-col md:flex-row md:items-center justify-between py-4 border-b border-border">
+              <div className="flex-1">
+                <h2 className="text-xl font-medium group-hover:text-primary transition-colors">{talk.title}</h2>
               </div>
-            ))}
-          </div>
-          
-          <h1 className="text-6xl font-bold mb-8 mt-16">2024</h1>
-          
-          <div className="space-y-6">
-            {talks.slice(0, 3).map((talk) => (
-              <div key={`past-${talk.id}`} className="group">
-                <a href={talk.link} className="flex flex-col md:flex-row md:items-center justify-between py-4 border-b border-border">
-                  <div className="flex-1">
-                    <h2 className="text-xl font-medium group-hover:text-primary transition-colors">{talk.title}</h2>
-                  </div>
-                  <div className="flex items-center space-x-4 text-muted-foreground text-sm mt-2 md:mt-0">
-                    <span>{talk.date}</span>
-                    <span>·</span>
-                    <span>{talk.duration}</span>
-                  </div>
-                </a>
+              <div className="flex items-center space-x-4 text-muted-foreground text-sm mt-2 md:mt-0">
+                <span>{talk.date}</span>
+                <span>·</span>
+                <span>{talk.duration}</span>
               </div>
-            ))}
+            </a>
           </div>
-        </div>
+        ))}
       </div>
-    </Layout>
+      
+      <h1 className="text-6xl font-bold mb-8 mt-16">2024</h1>
+      
+      <div className="space-y-6">
+        {talks.slice(0, 3).map((talk) => (
+          <div key={`past-${talk.id}`} className="group">
+            <a href={talk.link} className="flex flex-col md:flex-row md:items-center justify-between py-4 border-b border-border">
+              <div className="flex-1">
+                <h2 className="text-xl font-medium group-hover:text-primary transition-colors">{talk.title}</h2>
+              </div>
+              <div className="flex items-center space-x-4 text-muted-foreground text-sm mt-2 md:mt-0">
+                <span>{talk.date}</span>
+                <span>·</span>
+                <span>{talk.duration}</span>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </BlogLayout>
   );
 }

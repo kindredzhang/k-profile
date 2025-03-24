@@ -78,7 +78,7 @@ export default function Home() {
             
             <div className="hidden md:block relative w-48 h-48 gradient-border">
               <img 
-                src="/profile_photo.jpg" 
+                src="/images/avatar.jpg" 
                 alt="Profile picture" 
                 className="absolute inset-0 rounded-full object-cover w-full h-full" 
               />

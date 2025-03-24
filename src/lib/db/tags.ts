@@ -1,4 +1,5 @@
-import { supabase, Tag, PostWithDetails } from '../supabase';
+import { supabase } from '../supabase';
+import { Tag, PostWithDetails } from '@/types';
 
 /**
  * 获取所有标签
@@ -35,39 +36,6 @@ export async function getTagBySlug(slug: string): Promise<Tag | null> {
   return tag;
 }
 
-/**
- * 获取包含文章数量的标签列表
- */
-export async function getTagsWithCount(): Promise<(Tag & { post_count: number })[]> {
-  try {
-    // 尝试使用RPC函数
-    const { data, error } = await supabase
-      .rpc('get_tags_with_post_count');
-
-    if (error) {
-      console.error('Error fetching tags with count:', error);
-      throw error;
-    }
-
-    return data || [];
-  } catch (error) {
-    console.error('Falling back to manual tag count calculation');
-    
-    // 如果RPC失败，使用替代方法手动计算标签计数
-    const { data: tags } = await supabase
-      .from('tags')
-      .select('*')
-      .order('name');
-      
-    if (!tags) return [];
-    
-    // 为每个标签添加计数属性
-    return tags.map(tag => ({
-      ...tag,
-      post_count: 0 // 默认为0，因为我们不做额外的数据库查询
-    }));
-  }
-}
 
 /**
  * 根据标签获取博客文章
