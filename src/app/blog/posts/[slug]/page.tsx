@@ -2,10 +2,10 @@ import ProgressWrapper from '@/components/blog/ProgressWrapper';
 import Layout from '@/components/layout/Layout';
 import { BookIcon } from '@/components/ui/icons';
 import { getAllPosts, getPostBySlug } from '@/lib/db';
+import { formattedDate } from '@/lib/utils';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
-import { formattedDate } from '@/lib/utils';
 
 // 生成静态页面参数
 export async function generateStaticParams() {
@@ -18,15 +18,10 @@ export async function generateStaticParams() {
   }));
 }
 
-interface PageProps {
-  params: Promise<{ slug: string }> | { slug: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
-}
-
 // 博客文章详情页面
-export default async function Post({ params }: PageProps) {
+export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
   try {
-    // 从已解析的参数中获取slug (需要await，因为params可能是Promise)
+    // 直接从参数中获取slug
     const resolvedParams = await params;
     const slug = resolvedParams.slug;
     
