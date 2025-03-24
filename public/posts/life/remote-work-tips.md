@@ -1,4 +1,5 @@
 ---
+star: true
 title: "远程工作效率提升指南：程序员篇"
 date: "2024-04-12"
 author: "Kindred Zhang"

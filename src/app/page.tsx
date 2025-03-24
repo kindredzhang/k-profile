@@ -1,28 +1,11 @@
 import Layout from '@/components/layout/Layout';
 import { BookIcon, CodeIcon, PresentationIcon, SendIcon } from '@/components/ui/icons';
 import Link from 'next/link';
+import { getStarredPosts } from '@/lib/db/posts';
+import { StarPost } from '@/types';
 
 // 模拟最近博客文章数据
-const recentPosts = [
-  {
-    id: 'post-1',
-    title: 'Migrating to Server Components',
-    date: 'Mar 8',
-    url: '/blog/migrating-to-server-components'
-  },
-  {
-    id: 'post-2',
-    title: 'Why I Switched to Bun',
-    date: 'Feb 12',
-    url: '/blog/why-i-switched-to-bun'
-  },
-  {
-    id: 'post-3',
-    title: 'The Future of React Server Components',
-    date: 'Jan 24',
-    url: '/blog/future-of-react-server-components'
-  }
-];
+const recentPosts: StarPost[] = await getStarredPosts();
 
 // 模拟精选项目数据
 const featuredProjects = [

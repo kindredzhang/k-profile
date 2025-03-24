@@ -9,3 +9,9 @@ export const formattedDate = (date: string) => new Date(date).toLocaleDateString
   month: 'short',
   day: 'numeric'
 });
+
+export const readingTime = (content: string) => {
+  const words = content.split(' ').length;
+  const readingTime = Math.ceil(words / 200) || 5;
+  return `${readingTime}min`;
+};

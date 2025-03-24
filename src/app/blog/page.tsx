@@ -2,17 +2,16 @@ import BlogLayout from '@/components/blog/BlogLayout';
 import { BookIcon } from '@/components/ui/icons';
 import { getAllCategories } from '@/lib/db/categories';
 import { getAllPosts } from '@/lib/db/posts';
-import { Category, PostWithDetails } from '@/types';
-import { formattedDate } from '@/lib/utils';
+import { ListPost } from '@/types';
 import Link from 'next/link';
 
 export default async function BlogPage() {
   // 从数据库获取文章、分类和标签
-  const posts = await getAllPosts();
+  const posts: ListPost[] = await getAllPosts();
   const categories = await getAllCategories();
   
   // 按年份分组文章
-  const postsByYear = posts.reduce((acc: Record<string, PostWithDetails[]>, post) => {
+  const postsByYear = posts.reduce((acc: Record<string, ListPost[]>, post) => {
     // 使用date字段获取年份
     const date = post.date;
     const year = new Date(date).getFullYear().toString();
@@ -21,7 +20,7 @@ export default async function BlogPage() {
     }
     acc[year].push(post);
     return acc;
-  }, {} as Record<string, PostWithDetails[]>);
+  }, {} as Record<string, ListPost[]>);
 
   // 获取所有年份并排序
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
@@ -44,7 +43,7 @@ export default async function BlogPage() {
                 {postsByYear[year].map((post) => (
                   <article key={post.id} className="group transition-all duration-300">
                     <Link 
-                      href={`/blog/posts/${post.slug}`}
+                      href={post.url}
                       className="block py-2 border-b border-border/20 hover:border-primary/20 transition-all duration-300"
                     >
                       <div className="flex items-center justify-between gap-3 px-1.5">
@@ -54,8 +53,11 @@ export default async function BlogPage() {
                           </h2>
                         </div>
                         <time dateTime={post.date} className="text-xs text-muted-foreground whitespace-nowrap">
-                          {formattedDate(post.date)}
+                          {post.date}
                         </time>
+                        <span className="text-xs text-muted-foreground whitespace-nowrap">
+                          {post.reading_time}
+                        </span>
                       </div>
                     </Link>
                   </article>

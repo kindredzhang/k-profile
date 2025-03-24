@@ -32,8 +32,14 @@ export type Photo = {
     updated_at: string;
 };
 
-// 完整的文章类型（包含分类和标签）
-export type PostWithDetails = Post & {
-    category: Category | null;
-    tags: Tag[];
-};
+
+export type StarPost = {
+    id: string;
+    title: string;
+    date: string;
+    url: string;
+}
+
+export type ListPost = StarPost & {
+    reading_time: string;
+}

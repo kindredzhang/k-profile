@@ -39,9 +39,9 @@ const talks = [
   }
 ];
 
-export default function TalksPage() {
+export default function Life() {
   return (
-    <BlogLayout title="Talks">
+    <BlogLayout title="Life">
       <h1 className="text-6xl font-bold mb-8">2025</h1>
       
       <div className="space-y-6">

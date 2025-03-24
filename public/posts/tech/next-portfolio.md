@@ -1,4 +1,5 @@
 ---
+star: true
 slug: "tech"
 title: "构建现代React开发者作品集：从设计到部署"
 date: "2024-04-05"

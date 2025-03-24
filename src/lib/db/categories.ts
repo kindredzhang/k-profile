@@ -1,4 +1,4 @@
-import { supabase, Category } from '../supabase';
+import { Category } from '@/types';
 import fs from 'fs';
 import path from 'path';
 

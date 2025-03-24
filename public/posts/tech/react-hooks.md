@@ -1,4 +1,5 @@
 ---
+star: true
 title: "React Hooks: 深入理解与最佳实践"
 date: "2024-04-10"
 author: "Kindred Zhang"
