@@ -189,11 +189,11 @@ export default function Home() {
               Subscribe to my newsletter
             </h2>
             <p className="text-sm text-muted-foreground mb-3">Get notified about new articles, projects and updates.</p>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input 
                 type="email" 
                 placeholder="Your email address" 
-                className="flex-1 px-4 py-3 text-sm rounded-md border border-border bg-background/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:bg-background/90 transition-all duration-300"
+                className="flex-1 px-4 py-3 text-sm rounded-md border border-border bg-background/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:bg-background/90 transition-all duration-300 overflow-hidden"
               />
               <button className="px-5 py-3 text-sm font-semibold rounded-md gradient-btn text-primary-foreground inline-flex items-center gap-2">
                 <SendIcon />
