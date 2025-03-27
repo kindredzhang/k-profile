@@ -1,27 +1,15 @@
 import Layout from '@/components/layout/Layout';
-import { BookIcon, CodeIcon, PresentationIcon, SendIcon } from '@/components/ui/icons';
+import { BookIcon, CodeIcon, SendIcon } from '@/components/ui/icons';
 import { getStaredPosts } from '@/lib/db/posts';
-import { StarPost } from '@/types';
+import { getProjects } from '@/lib/db/projects';
+import { Project, StarPost } from '@/types';
 import Link from 'next/link';
 
 // 模拟最近博客文章数据
 const recentPosts: StarPost[] = await getStaredPosts();
 
 // 模拟精选项目数据
-const featuredProjects = [
-  {
-    id: 'project-1',
-    title: 'Nuxt UI',
-    description: 'A UI Library for Modern Web Applications',
-    url: '/projects/nuxt-ui'
-  },
-  {
-    id: 'project-2',
-    title: 'Vite Plugin Icons',
-    description: 'Use any icon from popular icon sets in Vite projects',
-    url: '/projects/vite-plugin-icons'
-  }
-];
+const featuredProjects: Project[] = await getProjects(true);
 
 // 首页组件
 export default function Home() {
@@ -169,13 +157,9 @@ export default function Home() {
                     <path d="M17 10h4V6"></path>
                   </svg>
                   When I'm not coding,
-                </span> you can find me hiking in the mountains, reading science fiction, or experimenting with new cooking recipes.
+                </span> you can find me listen rock music, reading science fiction, or experimenting with new photography.
               </p>
               
-              <p>
-                I occasionally <Link href="/talks" className="text-primary hover:underline inline-flex items-center gap-1"><PresentationIcon className="text-primary" width="16" height="16" />speak at conferences</Link> about web development, open source, and developer tools.
-                If you'd like to support my work, consider <Link href="/sponsors" className="text-primary hover:underline inline-flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>becoming a sponsor</Link>.
-              </p>
             </div>
           </div>
           

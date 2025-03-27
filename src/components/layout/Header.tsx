@@ -21,8 +21,8 @@ export default function Header() {
             {/* <Link href="/talks" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
               Talks
             </Link> */}
-            <Link href="/sponsors" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
-              Sponsors
+            <Link href="/about" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
+              About
             </Link>
           </nav>
           
