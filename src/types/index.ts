@@ -1,14 +1,3 @@
-// 获取文章类型定义
-export type Post = {
-    id: number;
-    slug: string;
-    title: string;
-    date: string;
-    author: string;
-    description: string | null;
-    content: string;
-    view_count: number;
-};
 
 export type Category = {
     id: number;
@@ -33,13 +22,31 @@ export type Photo = {
 };
 
 
+// Post
+
 export type StarPost = {
     id: string;
     title: string;
     date: string;
-    url: string;
+    url?: string;
 }
 
 export type ListPost = StarPost & {
     reading_time: string;
+}
+
+export type DetailPost = StarPost & {
+    content: string;
+    view_count: number;
+    reading_time: string;
+}
+
+// Projects
+export type Project = {
+    id: number;
+    title: string;
+    description: string | null;
+    url: string;
+    tags: string[];
+    is_featured: boolean;
 }

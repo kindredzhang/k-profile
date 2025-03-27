@@ -2,13 +2,13 @@ import BlogLayout from '@/components/blog/BlogLayout';
 import { BookIcon } from '@/components/ui/icons';
 import { getAllCategories } from '@/lib/db/categories';
 import { getAllPosts } from '@/lib/db/posts';
-import { ListPost } from '@/types';
+import { Category, ListPost } from '@/types';
 import Link from 'next/link';
 
 export default async function BlogPage() {
   // 从数据库获取文章、分类和标签
   const posts: ListPost[] = await getAllPosts();
-  const categories = await getAllCategories();
+  const categories: Category[] = await getAllCategories();
   
   // 按年份分组文章
   const postsByYear = posts.reduce((acc: Record<string, ListPost[]>, post) => {
@@ -43,7 +43,7 @@ export default async function BlogPage() {
                 {postsByYear[year].map((post) => (
                   <article key={post.id} className="group transition-all duration-300">
                     <Link 
-                      href={post.url}
+                      href={post.url!}
                       className="block py-2 border-b border-border/20 hover:border-primary/20 transition-all duration-300"
                     >
                       <div className="flex items-center justify-between gap-3 px-1.5">
@@ -69,7 +69,7 @@ export default async function BlogPage() {
       ) : (
         <div className="text-center py-8 bg-card/30 p-5 rounded-lg border border-border/30">
           <BookIcon width="24" height="24" className="text-primary/40 mx-auto mb-2" />
-          <p className="text-muted-foreground text-sm">暂无博客文章</p>
+          <p className="text-muted-foreground text-sm">No blog posts available...</p>
         </div>
       )}
     </BlogLayout>

@@ -1,11 +1,7 @@
+import MouseGlow from "@/components/effects/MouseGlow";
+import ThemeProvider from "@/components/theme/ThemeProvider";
 import type { Metadata } from "next";
 import "./globals.css";
-import MouseGlow from "@/components/effects/MouseGlow";
-
-// 使用系统字体变量
-const fontVariables = {
-  variable: '--font-system',
-};
 
 export const metadata: Metadata = {
   title: "Kindred Zhang",
@@ -22,24 +18,13 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `
-          (function() {
-            function getThemePreference() {
-              if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-                return localStorage.getItem('theme');
-              }
-              return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-            
-            const theme = getThemePreference();
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-            document.body.classList.toggle('dark', theme === 'dark');
-          })();
-        `}} />
+        {/* No inline script - using ThemeProvider instead */}
       </head>
       <body className="font-sans antialiased relative overflow-x-hidden">
-        <MouseGlow />
-        {children}
+        <ThemeProvider>
+          <MouseGlow />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

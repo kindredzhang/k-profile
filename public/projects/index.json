@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "title": "Novel Agent",
+        "description": "AI novels control utils, support generation context base exist novel and web manger multi novels, can chose generat new novel and continue write.",
+        "url": "https://github.com/kindredzhang/novel-agent",
+        "tags": [
+            "AI",
+            "LangChain",
+            "Python",
+            "Flask"
+        ],
+        "is_featured": true
+    },
+    {
+        "id": 2,
+        "title": "Mind Flow",
+        "description": "Use any icon from popular icon sets in Vite projects",
+        "url": "https://github.com/kindredzhang/mind-flow",
+        "tags": [
+            "LlamaIndex",
+            "Flask"
+        ],
+        "is_featured": true
+    },
+    {
+        "id": 3,
+        "title": "API Navigator",
+        "description": "Quick API endpoint navigation for multiple frameworks. Press Ctrl+Shift+A (Cmd+Shift+A on Mac) to search both files and API endpoints in your workspace, similar to IntelliJ IDEA's search everywhere feature.",
+        "url": "https://github.com/kindredzhang/api-navigator",
+        "tags": [
+            "TypeScript"
+        ],
+        "is_featured": true
+    },
+    {
+        "id": 4,
+        "title": "K-Profile",
+        "description": "Personal Blog website built with Next.js",
+        "url": "https://github.com/kindredzhang/k-profile",
+        "tags": [
+            "Next.js"
+        ],
+        "is_featured": false
+    }
+]

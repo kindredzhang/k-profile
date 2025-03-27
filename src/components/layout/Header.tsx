@@ -18,9 +18,9 @@ export default function Header() {
             <Link href="/projects" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
               Projects
             </Link>
-            <Link href="/talks" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
+            {/* <Link href="/talks" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
               Talks
-            </Link>
+            </Link> */}
             <Link href="/sponsors" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
               Sponsors
             </Link>
@@ -41,15 +41,6 @@ export default function Header() {
             </a>
             <div className="border-l border-border h-4 mx-1"></div>
             <ThemeToggle />
-            
-            {/* 移动端菜单按钮 */}
-            <button className="md:hidden text-foreground hover:text-primary transition-colors p-2 ml-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="4" x2="20" y1="12" y2="12"/>
-                <line x1="4" x2="20" y1="6" y2="6"/>
-                <line x1="4" x2="20" y1="18" y2="18"/>
-              </svg>
-            </button>
           </div>
         </div>
       </div>

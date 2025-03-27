@@ -1,11 +1,11 @@
 import Layout from '@/components/layout/Layout';
 import { BookIcon, CodeIcon, PresentationIcon, SendIcon } from '@/components/ui/icons';
-import Link from 'next/link';
-import { getStarredPosts } from '@/lib/db/posts';
+import { getStaredPosts } from '@/lib/db/posts';
 import { StarPost } from '@/types';
+import Link from 'next/link';
 
 // 模拟最近博客文章数据
-const recentPosts: StarPost[] = await getStarredPosts();
+const recentPosts: StarPost[] = await getStaredPosts();
 
 // 模拟精选项目数据
 const featuredProjects = [
@@ -87,7 +87,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 responsive-grid">
               {recentPosts.map((post) => (
                 <article key={post.id} className="group border border-border rounded-lg overflow-hidden hover:border-primary/30 transition-all duration-300 bg-card/80 backdrop-blur-sm hover:backdrop-blur-md hover:bg-card/95 hover:shadow-sm enhanced-card responsive-card">
-                  <Link href={post.url} className="block p-4">
+                  <Link href={post.url!} className="block p-4">
                     <time className="text-xs text-primary/80 font-medium mb-2 block">{post.date}</time>
                     <h3 className="text-base font-medium group-hover:text-primary transition-colors line-clamp-2 flex items-center gap-1">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary/60 group-hover:text-primary transition-colors">
