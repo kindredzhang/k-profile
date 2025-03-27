@@ -105,22 +105,23 @@ const mockPhotos: Photo[] = [
 
 // 获取所有照片
 export async function getAllPhotos() {
-  try {
-    // 尝试从数据库获取照片
-    const { data: photos, error } = await supabase
-      .from('photos')
-      .select('*')
-      .order('created_at', { ascending: false });
+  // try {
+  //   // 尝试从数据库获取照片
+  //   const { data: photos, error } = await supabase
+  //     .from('photos')
+  //     .select('*')
+  //     .order('created_at', { ascending: false });
 
-    if (error) {
-      console.warn('Error fetching photos from database, using mock data:', error);
-      return mockPhotos;
-    }
+  //   if (error) {
+  //     console.warn('Error fetching photos from database, using mock data:', error);
+  //     return mockPhotos;
+  //   }
 
-    // 如果数据库没有照片，使用模拟数据
-    return photos && photos.length > 0 ? photos : mockPhotos;
-  } catch (error) {
-    console.warn('Error in getAllPhotos, using mock data:', error);
-    return mockPhotos;
-  }
+  //   // 如果数据库没有照片，使用模拟数据
+  //   return photos && photos.length > 0 ? photos : mockPhotos;
+  // } catch (error) {
+  //   console.warn('Error in getAllPhotos, using mock data:', error);
+  //   return mockPhotos;
+  // }
+  return mockPhotos;
 }

@@ -3,7 +3,7 @@ import PhotoGrid from '@/components/photo/PhotoGrid';
 import { getAllPhotos } from '@/lib/db/photos';
 
 export const metadata = {
-  title: '照片 | Kindred',
+  title: 'Photos | Kindred',
   description: 'Kindred的摄影作品集',
 };
 
