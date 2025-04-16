@@ -1,4 +1,5 @@
 import ThemeToggle from '@/components/ThemeToggle';
+import CDLogo from '@/components/ui/CdLogo';
 import { CameraIcon, EmailIcon, GitHubIcon, TwitterIcon } from '@/components/ui/icons';
 import Link from 'next/link';
 
@@ -6,9 +7,7 @@ export default function Header() {
   return (
     <header className="w-full border-b border-border bg-background/60 backdrop-blur-xl py-2 sticky top-0 z-50 transition-all duration-300 shadow-sm">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <Link href="/" className="font-playfair text-xl text-foreground hover:text-primary transition-colors">
-          Kindred
-        </Link>
+        <CDLogo />
 
         <div className="flex items-center space-x-4">
           <nav className="hidden md:flex space-x-4">
@@ -30,10 +29,10 @@ export default function Header() {
             <a href="/photo" className="text-foreground hover:text-primary transition-colors p-1.5">
               <CameraIcon className="w-4 h-4" />
             </a>
-            <a href="https://github.com/kindredzhang" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5">
+            <a href="https://github.com/kindredzhang" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5" onClick={(e) => { e.preventDefault(); window.open('https://github.com/kindredzhang', '_blank'); }}>
               <GitHubIcon className="w-4 h-4" />
             </a>
-            <a href="https://twitter.com/wanchun__" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5">
+            <a href="https://twitter.com/wanchun__" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5" onClick={(e) => { e.preventDefault(); window.open('https://twitter.com/wanchun__', '_blank'); }}>
               <TwitterIcon className="w-4 h-4" />
             </a>
             <a href="mailto:kindred.zhang.life@gmail.com" className="text-foreground hover:text-primary transition-colors p-1.5">
