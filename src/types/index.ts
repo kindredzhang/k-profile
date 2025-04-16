@@ -17,10 +17,20 @@ export type Photo = {
     title: string | null;
     description: string | null;
     url: string;
+    category?: string | null;
+    tags?: string[];
+    is_featured?: boolean;
     created_at: string;
     updated_at: string;
 };
 
+// User for admin authentication
+export type User = {
+    id: string;
+    email: string;
+    created_at: string;
+    updated_at: string;
+};
 
 // Post
 

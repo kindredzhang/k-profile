@@ -1,3 +1,5 @@
+'use client';
+
 import ThemeToggle from '@/components/ThemeToggle';
 import CDLogo from '@/components/ui/CdLogo';
 import { CameraIcon, EmailIcon, GitHubIcon, TwitterIcon } from '@/components/ui/icons';
@@ -29,10 +31,10 @@ export default function Header() {
             <a href="/photo" className="text-foreground hover:text-primary transition-colors p-1.5">
               <CameraIcon className="w-4 h-4" />
             </a>
-            <a href="https://github.com/kindredzhang" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5" onClick={(e) => { e.preventDefault(); window.open('https://github.com/kindredzhang', '_blank'); }}>
+            <a href="https://github.com/kindredzhang" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5">
               <GitHubIcon className="w-4 h-4" />
             </a>
-            <a href="https://twitter.com/wanchun__" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5" onClick={(e) => { e.preventDefault(); window.open('https://twitter.com/wanchun__', '_blank'); }}>
+            <a href="https://twitter.com/wanchun__" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5">
               <TwitterIcon className="w-4 h-4" />
             </a>
             <a href="mailto:kindred.zhang.life@gmail.com" className="text-foreground hover:text-primary transition-colors p-1.5">
