@@ -5,8 +5,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Kindred Zhang",
-  description: "一个使用Next.js构建的现代化个人博客",
-  keywords: ["博客", "技术", "编程", "前端开发", "Next.js"],
+  description: "A modern personal blog built with Next.js",
+  keywords: ["blog", "technology", "programming", "frontend development", "Next.js", "code", "live"],
   authors: [{ name: "Kindred Zhang" }],
 };
 
