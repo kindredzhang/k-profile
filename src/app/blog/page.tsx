@@ -53,7 +53,7 @@ export default async function BlogPage() {
                           </h2>
                         </div>
                         <time dateTime={post.date} className="text-xs text-muted-foreground whitespace-nowrap">
-                          {post.date}
+                          {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </time>
                         <span className="text-xs text-muted-foreground whitespace-nowrap">
                           {post.reading_time}
