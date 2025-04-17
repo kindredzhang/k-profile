@@ -2,7 +2,7 @@
 
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
-import { isLoggedIn } from '@/lib/auth';
+import { isLoggedIn } from '@/lib/auth-client';
 import { Photo } from '@/types';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ export default function PhotoEditPage() {
   const router = useRouter();
   const params = useParams();
   const photoId = params.id as string;
-  
+
   const [photo, setPhoto] = useState<Photo | null>(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -37,14 +37,14 @@ export default function PhotoEditPage() {
   const fetchPhoto = async () => {
     try {
       const response = await fetch(`/api/admin/photos/${photoId}`);
-      
+
       if (!response.ok) {
         throw new Error('获取照片失败');
       }
-      
+
       const data = await response.json();
       const photo = data.photo as Photo;
-      
+
       setPhoto(photo);
       setTitle(photo.title || '');
       setDescription(photo.description || '');

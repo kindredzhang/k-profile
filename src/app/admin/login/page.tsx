@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { isLoggedIn } from '@/lib/auth';
+import { isLoggedIn } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -41,7 +41,12 @@ export default function LoginPage() {
         return;
       }
 
-      // 登录成功，重定向到管理员仪表盘
+      // 登录成功，保存用户信息到会话存储
+      if (data.user) {
+        sessionStorage.setItem('admin_user', JSON.stringify(data.user));
+      }
+
+      // 重定向到管理员仪表盘
       router.push('/admin/dashboard');
     } catch (err) {
       console.error('Login error:', err);
@@ -106,7 +111,7 @@ export default function LoginPage() {
               {loading ? '登录中...' : '登录'}
             </Button>
           </div>
-
+{/* 
           <div className="text-center mt-4">
             <p className="text-sm text-muted-foreground">
               还没有账号？{' '}
@@ -118,7 +123,7 @@ export default function LoginPage() {
                 注册新账号
               </button>
             </p>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

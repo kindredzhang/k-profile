@@ -2,8 +2,7 @@
 
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
-import { isLoggedIn } from '@/lib/auth';
-import { deletePhoto } from '@/lib/db/photos';
+import { isLoggedIn } from '@/lib/auth-client';
 import { Photo } from '@/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -30,11 +29,11 @@ export default function PhotosManagePage() {
   const fetchPhotos = async () => {
     try {
       const response = await fetch('/api/admin/photos');
-      
+
       if (!response.ok) {
         throw new Error('获取照片失败');
       }
-      
+
       const data = await response.json();
       setPhotos(data.photos);
     } catch (err) {
@@ -51,16 +50,16 @@ export default function PhotosManagePage() {
     }
 
     setDeleteLoading(id);
-    
+
     try {
       const response = await fetch(`/api/admin/photos/${id}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         throw new Error('删除照片失败');
       }
-      
+
       // 删除成功，更新照片列表
       setPhotos(photos.filter(photo => photo.id !== id));
     } catch (err) {
@@ -126,13 +125,13 @@ export default function PhotosManagePage() {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="p-4">
                   <h3 className="font-medium mb-1">{photo.title || '无标题'}</h3>
                   <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                     {photo.description || '无描述'}
                   </p>
-                  
+
                   <div className="flex justify-between">
                     <Button
                       variant="outline"

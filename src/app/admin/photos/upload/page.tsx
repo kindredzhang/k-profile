@@ -2,7 +2,7 @@
 
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
-import { isLoggedIn } from '@/lib/auth';
+import { isLoggedIn } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

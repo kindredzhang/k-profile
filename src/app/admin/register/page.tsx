@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { isLoggedIn } from '@/lib/auth';
+import { isLoggedIn } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -53,7 +53,7 @@ export default function RegisterPage() {
 
       // 注册成功
       setSuccess('注册成功！即将跳转到登录页面...');
-      
+
       // 3秒后跳转到登录页面
       setTimeout(() => {
         router.push('/admin/login');

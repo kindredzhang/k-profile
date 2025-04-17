@@ -1,12 +1,18 @@
 import { User } from '@/types';
-import { supabase } from './supabase';
-import { stringToHash } from './utils';
+import { createClient } from '@/utils/supabase/server-alt';
+import { cookies } from 'next/headers';
+import { stringToHash } from '../utils';
+
+// Re-export client-side auth functions from auth-client.ts
+export { getCurrentUser, isLoggedIn, logout } from './auth-client';
 
 /**
- * 管理员登录
+ * 管理员登录 - 仅在服务器端使用
  */
 export async function loginAdmin(email: string, password: string) {
   try {
+    const cookieStore = await cookies();
+    const supabase = await createClient(cookieStore);
     const hash = stringToHash(password);
     // 查询用户
     const { data: users, error: queryError } = await supabase
@@ -34,48 +40,9 @@ export async function loginAdmin(email: string, password: string) {
       updated_at: users[0].updated_at
     };
 
-    // 在会话中存储用户信息
-    sessionStorage.setItem('admin_user', JSON.stringify(user));
-
     return { user, error: null };
   } catch (error) {
     console.error('Login error:', error);
     return { user: null, error: '登录过程中发生错误' };
   }
-}
-
-/**
- * 检查用户是否已登录
- */
-export function isLoggedIn(): boolean {
-  if (typeof window === 'undefined') return false;
-
-  const userStr = sessionStorage.getItem('admin_user');
-  return !!userStr;
-}
-
-/**
- * 获取当前登录用户
- */
-export function getCurrentUser(): User | null {
-  if (typeof window === 'undefined') return null;
-
-  const userStr = sessionStorage.getItem('admin_user');
-  if (!userStr) return null;
-
-  try {
-    return JSON.parse(userStr) as User;
-  } catch (error) {
-    console.error('Error parsing user from session:', error);
-    return null;
-  }
-}
-
-/**
- * 退出登录
- */
-export function logout() {
-  if (typeof window === 'undefined') return;
-
-  sessionStorage.removeItem('admin_user');
 }

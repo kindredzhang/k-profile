@@ -1,5 +1,6 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/client';
 import { Photo } from '@/types';
+
 
 export type { Photo };
 
@@ -33,6 +34,7 @@ const mockPhotos: Photo[] = [
 /**
  * 获取所有照片
  */
+const supabase = createClient();
 export async function getAllPhotos() {
   try {
     // 尝试从数据库获取照片

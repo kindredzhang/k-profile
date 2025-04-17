@@ -1,5 +1,5 @@
-import { formattedDate, readingTime } from '@/lib/utils';
 import { DetailPost, ListPost, StarPost } from '@/types';
+import { formattedDate, readingTime } from '@/utils';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';

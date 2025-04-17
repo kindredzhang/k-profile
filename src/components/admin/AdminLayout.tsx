@@ -1,6 +1,6 @@
 'use client';
 
-import { logout } from '@/lib/auth';
+import { logout } from '@/lib/auth-client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -27,12 +27,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               Kindred 管理后台
             </Link>
           </div>
-          
+
           <div className="flex items-center space-x-4">
             <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
               返回网站
             </Link>
-            <button 
+            <button
               onClick={handleLogout}
               className="text-sm text-red-500 hover:text-red-700"
             >
@@ -41,33 +41,33 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           </div>
         </div>
       </header>
-      
+
       {/* 侧边栏和内容区域 */}
       <div className="flex flex-1">
         {/* 侧边栏 */}
         <aside className="w-64 bg-card border-r border-border p-4 hidden md:block">
           <nav className="space-y-1">
-            <Link 
-              href="/admin/dashboard" 
+            <Link
+              href="/admin/dashboard"
               className="block px-4 py-2 rounded-md hover:bg-muted"
             >
               仪表盘
             </Link>
-            <Link 
-              href="/admin/photos" 
+            <Link
+              href="/admin/photos"
               className="block px-4 py-2 rounded-md hover:bg-muted"
             >
               照片管理
             </Link>
-            <Link 
-              href="/admin/photos/upload" 
+            <Link
+              href="/admin/photos/upload"
               className="block px-4 py-2 rounded-md hover:bg-muted"
             >
               上传照片
             </Link>
           </nav>
         </aside>
-        
+
         {/* 主内容区域 */}
         <main className="flex-1 overflow-auto">
           {children}

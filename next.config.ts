@@ -2,7 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['images.unsplash.com'], // 允许从Unsplash加载图片
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ], // 允许从Unsplash加载图片
   },
   // 配置字体加载
   async headers() {

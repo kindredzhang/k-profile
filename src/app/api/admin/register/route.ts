@@ -1,11 +1,11 @@
-// import { createClient } from '@/utils/supabase/server';
-import { createClient } from '@/utils/supabase/server';
-import { stringToHash } from '@/lib/utils';
+import { stringToHash } from '@/utils';
+import { createClient } from '@/utils/supabase/server-alt';
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-// import { supabase } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
-  const supabase = await createClient();
+  const cookieStore = await cookies();
+  const supabase = await createClient(cookieStore);
   try {
     const { email, password } = await request.json();
 

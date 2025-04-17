@@ -1,4 +1,4 @@
-import { isLoggedIn } from '@/lib/auth';
+// No auth check needed in this API route
 import { addPhoto, getAllPhotos } from '@/lib/db/photos';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   try {
     // 获取所有照片
     const photos = await getAllPhotos();
-    
+
     return NextResponse.json({ photos });
   } catch (error) {
     console.error('Error fetching photos:', error);
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
-    
+
     // 验证必填字段
     if (!data.url) {
       return NextResponse.json(
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+
     // 添加照片
     const photo = await addPhoto({
       title: data.title,
@@ -40,17 +40,17 @@ export async function POST(request: NextRequest) {
       tags: data.tags,
       is_featured: data.is_featured || false,
     });
-    
+
     if (!photo) {
       return NextResponse.json(
         { error: '添加照片失败' },
         { status: 500 }
       );
     }
-    
-    return NextResponse.json({ 
-      success: true, 
-      photo 
+
+    return NextResponse.json({
+      success: true,
+      photo
     });
   } catch (error) {
     console.error('Error adding photo:', error);

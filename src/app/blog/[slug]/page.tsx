@@ -2,7 +2,7 @@ import ProgressWrapper from '@/components/blog/ProgressWrapper';
 import Layout from '@/components/layout/Layout';
 import { BookIcon } from '@/components/ui/icons';
 import { getPostBySlug } from '@/lib/db';
-import { formattedDate, readingTime } from '@/lib/utils';
+import { formattedDate, readingTime } from '@/utils';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
