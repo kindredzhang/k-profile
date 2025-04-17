@@ -1,7 +1,6 @@
-import { supabase } from './supabase';
 import { User } from '@/types';
+import { supabase } from './supabase';
 import { stringToHash } from './utils';
-
 
 /**
  * 管理员登录
@@ -50,7 +49,7 @@ export async function loginAdmin(email: string, password: string) {
  */
 export function isLoggedIn(): boolean {
   if (typeof window === 'undefined') return false;
-  
+
   const userStr = sessionStorage.getItem('admin_user');
   return !!userStr;
 }
@@ -60,10 +59,10 @@ export function isLoggedIn(): boolean {
  */
 export function getCurrentUser(): User | null {
   if (typeof window === 'undefined') return null;
-  
+
   const userStr = sessionStorage.getItem('admin_user');
   if (!userStr) return null;
-  
+
   try {
     return JSON.parse(userStr) as User;
   } catch (error) {
@@ -77,6 +76,6 @@ export function getCurrentUser(): User | null {
  */
 export function logout() {
   if (typeof window === 'undefined') return;
-  
+
   sessionStorage.removeItem('admin_user');
 }
