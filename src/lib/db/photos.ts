@@ -1,35 +1,7 @@
-import { createClient } from '@/utils/supabase/client';
 import { Photo } from '@/types';
-
+import { createClient } from '@/utils/supabase/client';
 
 export type { Photo };
-
-// 模拟照片数据 - 仅在数据库连接失败时使用
-const mockPhotos: Photo[] = [
-  {
-    id: 1,
-    title: '水母',
-    description: '水族馆中的水母',
-    url: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?q=80&w=1000',
-    category: '自然',
-    tags: ['水族馆', '海洋生物'],
-    is_featured: true,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  },
-  {
-    id: 2,
-    title: '咖啡馆',
-    description: '城市中的咖啡馆',
-    url: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000',
-    category: '城市',
-    tags: ['咖啡', '城市生活'],
-    is_featured: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  },
-  // 其他模拟数据...
-];
 
 /**
  * 获取所有照片
@@ -45,15 +17,14 @@ export async function getAllPhotos() {
 
     console.log('photos', photos);
     if (error) {
-      console.warn('Error fetching photos from database, using mock data:', error);
-      return mockPhotos;
+      console.warn('Error fetching photos from database:', error);
+      return [];
     }
 
-    // 如果数据库没有照片，使用模拟数据
-    return photos && photos.length > 0 ? photos : mockPhotos;
+    return photos;
   } catch (error) {
-    console.warn('Error in getAllPhotos, using mock data:', error);
-    return mockPhotos;
+    console.warn('Error in getAllPhotos:', error);
+    return [];
   }
 }
 
@@ -70,13 +41,13 @@ export async function getFeaturedPhotos() {
 
     if (error) {
       console.warn('Error fetching featured photos from database:', error);
-      return mockPhotos.filter(photo => photo.is_featured);
+      return [];
     }
 
     return photos;
   } catch (error) {
     console.warn('Error in getFeaturedPhotos, using mock data:', error);
-    return mockPhotos.filter(photo => photo.is_featured);
+    return [];
   }
 }
 

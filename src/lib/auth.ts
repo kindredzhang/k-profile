@@ -1,5 +1,5 @@
 import { User } from '@/types';
-import { createClient } from '@/utils/supabase/server-alt';
+import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import { stringToHash } from '../utils';
 
