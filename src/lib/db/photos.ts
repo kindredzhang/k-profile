@@ -1,3 +1,4 @@
+import { deleteImage } from '@/lib/storage';
 import { Photo } from '@/types';
 import { createClient } from '@/utils/supabase/client';
 
@@ -147,6 +148,18 @@ export async function updatePhoto(id: number, updates: Partial<Omit<Photo, 'id' 
  */
 export async function deletePhoto(id: number) {
   try {
+    // 先获取照片信息，以便删除存储中的文件
+    const photo = await getPhotoById(id);
+
+    if (photo && photo.url) {
+      // 检查URL是否来自Supabase Storage
+      if (photo.url.includes('storage.googleapis.com') || photo.url.includes('supabase')) {
+        // 尝试删除存储中的文件
+        await deleteImage(photo.url);
+      }
+    }
+
+    // 删除数据库中的记录
     const { error } = await supabase
       .from('photos')
       .delete()
