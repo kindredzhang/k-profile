@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { isLoggedIn } from '@/lib/auth-client';
+import { isLoggedIn, saveUserToSession } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -42,9 +42,8 @@ export default function LoginPage() {
       }
 
       // 登录成功，保存用户信息到会话存储
-      if (data.user) {
-        // 使用 saveUserToSession 函数保存用户信息
-        const { saveUserToSession } = await import('@/lib/auth-client');
+      if (data) {
+        // {"success":true,"user":{"user":{...}}}
         saveUserToSession(data.user);
       }
 

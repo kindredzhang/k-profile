@@ -1,6 +1,6 @@
 import { deleteImage } from '@/lib/storage';
 import { Photo } from '@/types';
-import { createClient } from '@/utils/supabase/client';
+import { createClient as createClientBrowser } from '@/utils/supabase/client';
 
 export type { Photo };
 
@@ -8,10 +8,14 @@ export type { Photo };
  * 获取所有照片
  * @param customClient 可选的自定义Supabase客户端
  */
-const supabase = createClient();
+// 在客户端环境下创建 Supabase 客户端
+const supabase = typeof window !== 'undefined' ? createClientBrowser() : null;
 export async function getAllPhotos(customClient?: any) {
   try {
     // 使用提供的客户端或默认客户端
+    if (!customClient && !supabase) {
+      throw new Error('No Supabase client available. Please provide a client.');
+    }
     const client = customClient || supabase;
 
     // 尝试从数据库获取照片
@@ -39,6 +43,9 @@ export async function getAllPhotos(customClient?: any) {
 export async function getFeaturedPhotos(customClient?: any) {
   try {
     // 使用提供的客户端或默认客户端
+    if (!customClient && !supabase) {
+      throw new Error('No Supabase client available. Please provide a client.');
+    }
     const client = customClient || supabase;
 
     const { data: photos, error } = await client
@@ -67,6 +74,9 @@ export async function getFeaturedPhotos(customClient?: any) {
 export async function getPhotoById(id: number, customClient?: any) {
   try {
     // 使用提供的客户端或默认客户端
+    if (!customClient && !supabase) {
+      throw new Error('No Supabase client available. Please provide a client.');
+    }
     const client = customClient || supabase;
 
     const { data: photo, error } = await client
@@ -95,6 +105,9 @@ export async function getPhotoById(id: number, customClient?: any) {
 export async function getPhotosByCategory(category: string, customClient?: any) {
   try {
     // 使用提供的客户端或默认客户端
+    if (!customClient && !supabase) {
+      throw new Error('No Supabase client available. Please provide a client.');
+    }
     const client = customClient || supabase;
 
     const { data: photos, error } = await client
@@ -123,6 +136,9 @@ export async function getPhotosByCategory(category: string, customClient?: any) 
 export async function addPhoto(photo: Omit<Photo, 'id' | 'created_at' | 'updated_at'>, customClient?: any) {
   try {
     // 使用提供的客户端或默认客户端
+    if (!customClient && !supabase) {
+      throw new Error('No Supabase client available. Please provide a client.');
+    }
     const client = customClient || supabase;
 
     const { data, error } = await client
@@ -151,6 +167,9 @@ export async function addPhoto(photo: Omit<Photo, 'id' | 'created_at' | 'updated
 export async function updatePhoto(id: number, updates: Partial<Omit<Photo, 'id' | 'created_at' | 'updated_at'>>, customClient?: any) {
   try {
     // 使用提供的客户端或默认客户端
+    if (!customClient && !supabase) {
+      throw new Error('No Supabase client available. Please provide a client.');
+    }
     const client = customClient || supabase;
 
     const { data, error } = await client
@@ -179,6 +198,9 @@ export async function updatePhoto(id: number, updates: Partial<Omit<Photo, 'id' 
 export async function deletePhoto(id: number, customClient?: any) {
   try {
     // 使用提供的客户端或默认客户端
+    if (!customClient && !supabase) {
+      throw new Error('No Supabase client available. Please provide a client.');
+    }
     const client = customClient || supabase;
 
     // 先获取照片信息，以便删除存储中的文件

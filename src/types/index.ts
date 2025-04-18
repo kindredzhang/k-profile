@@ -25,16 +25,8 @@ export type Photo = {
     updated_at: string;
 };
 
-// User for admin authentication
-export type User = {
-    id: string;
-    email: string;
-    created_at: string;
-    updated_at: string;
-};
 
 // Post
-
 export type StarPost = {
     id: string;
     title: string;

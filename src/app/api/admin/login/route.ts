@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
     // 调用登录函数
     const { user, error } = await loginAdmin(email, password);
 
+    console.log('Login result:', user, error);
     if (error || !user) {
       return NextResponse.json(
         { error: error || '登录失败' },

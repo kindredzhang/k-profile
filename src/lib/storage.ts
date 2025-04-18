@@ -39,47 +39,46 @@ export async function uploadImage(file: File) {
  */
 export async function deleteImage(url: string): Promise<boolean> {
   try {
-    // // 使用服务器端 API 删除文件
-    // // 在客户端使用完整URL，在服务器端使用相对URL
-    // let apiUrl;
-    // if (typeof window !== 'undefined') {
-    //   // 客户端环境
-    //   apiUrl = new URL('/api/admin/upload/delete', window.location.origin).toString();
-    // } else {
-    //   // 服务器端环境
-    //   apiUrl = '/api/admin/upload/delete';
-    // }
+    // 在客户端环境下，使用 API 路由删除文件
+    if (typeof window !== 'undefined') {
+      // 客户端环境
+      const apiUrl = new URL('/api/admin/upload/delete', window.location.origin).toString();
 
-    // const response = await fetch(apiUrl, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ url }),
-    // });
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url }),
+      });
 
-    const fileStation = getFileStation(url);
-    const supabase = createClient();
-    const { data, error } = await supabase.storage
-      .from('photos')
-      .remove(fileStation);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error deleting image:', errorData);
+        return false;
+      }
 
-    console.log('remove file from supabse.................');
-    console.log('fileStation', fileStation);
-    console.log('data', data);
-    console.log('error', error);
+      return true;
+    } else {
+      // 服务器端环境
+      const fileStation = getFileStation(url);
+      const supabase = createClient();
+      const { data, error } = await supabase.storage
+        .from('photos')
+        .remove(fileStation);
 
-    if (error != null) {
-      console.error('Error deleting image:', error);
-      return false;
+      if (error != null) {
+        console.error('Error deleting image:', error);
+        return false;
+      }
+
+      if (data === null) {
+        console.error('Unexpected response from Supabase storage delete');
+        return false;
+      }
+
+      return true;
     }
-
-    if (data === null) {
-      console.error('Unexpected response from Supabase storage delete');
-      return false;
-    }
-
-    return true;
   } catch (error) {
     console.error('Error in deleteImage:', error);
     return false;
