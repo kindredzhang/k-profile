@@ -1,6 +1,6 @@
+import { withAuthenticatedClient } from '@/lib/db/helpers';
 import { addSubscriber } from '@/lib/db/subscribers';
 import { sendConfirmationEmail } from '@/lib/email';
-import { withAuthenticatedClient } from '@/lib/db/helpers';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**

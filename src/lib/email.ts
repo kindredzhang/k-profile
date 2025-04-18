@@ -1,5 +1,5 @@
 import { logEmailSent } from './db/subscribers';
-import { Subscriber } from './db/subscribers';
+import { getSiteUrl } from '@/utils/url';
 
 /**
  * 邮件发送配置
@@ -55,7 +55,8 @@ export async function sendConfirmationEmail(
     const transporter = nodemailer.default.createTransport(config);
     
     // 确认链接
-    const confirmationUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/subscribe/confirm?token=${token}`;
+    const siteUrl = getSiteUrl();
+    const confirmationUrl = `${siteUrl}/api/subscribe/confirm?token=${token}`;
     
     // 邮件主题
     const subject = 'Confirm your subscription to Kindred\'s Newsletter';
@@ -136,7 +137,8 @@ export async function sendNewContentEmail(
     const transporter = nodemailer.default.createTransport(config);
     
     // 取消订阅链接
-    const unsubscribeUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/subscribe/unsubscribe?email=${encodeURIComponent(to)}`;
+    const siteUrl = getSiteUrl();
+    const unsubscribeUrl = `${siteUrl}/api/subscribe/unsubscribe?email=${encodeURIComponent(to)}`;
     
     // 邮件主题
     const emailSubject = subject || 'New content from Kindred';

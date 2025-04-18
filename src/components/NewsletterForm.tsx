@@ -1,12 +1,23 @@
 'use client';
 
-import { useState } from 'react';
-import { SendIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { SendIcon, X } from 'lucide-react';
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+
+  // 自动清除消息的效果
+  useEffect(() => {
+    if (message && message.type === 'success') {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 5000); // 5秒后自动消失
+      
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +61,11 @@ export default function NewsletterForm() {
     }
   };
 
+  // 关闭消息
+  const closeMessage = () => {
+    setMessage(null);
+  };
+
   return (
     <div className="p-8 rounded-lg border border-primary/30 bg-primary/10 backdrop-blur-md transition-all duration-300 hover:backdrop-blur-xl hover:border-primary/40 shadow-sm hover:shadow-md enhanced-card">
       <h2 className="font-playfair text-lg font-bold mb-2 enhance-text flex items-center gap-2">
@@ -62,8 +78,15 @@ export default function NewsletterForm() {
       <p className="text-sm text-muted-foreground mb-3">Get notified about new articles, projects and updates.</p>
       
       {message && (
-        <div className={`mb-3 p-2 text-sm rounded ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-          {message.text}
+        <div className={`mb-3 p-2 text-sm rounded relative ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+          <button 
+            onClick={closeMessage}
+            className="absolute top-1 right-1 p-1 rounded-full hover:bg-gray-200 transition-colors"
+            aria-label="Close message"
+          >
+            <X size={14} />
+          </button>
+          <div className="pr-5">{message.text}</div>
         </div>
       )}
       
