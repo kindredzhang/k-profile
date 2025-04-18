@@ -153,9 +153,13 @@ export async function deletePhoto(id: number) {
 
     if (photo && photo.url) {
       // 检查URL是否来自Supabase Storage
-      if (photo.url.includes('storage.googleapis.com') || photo.url.includes('supabase')) {
+      if (photo.url.includes('supabase.co') || photo.url.includes('storage/v1/object')) {
         // 尝试删除存储中的文件
-        await deleteImage(photo.url);
+        const success = await deleteImage(photo.url);
+        if (!success) {
+          console.warn(`Failed to delete image from storage: ${photo.url}`);
+          // 继续删除数据库记录，即使存储删除失败
+        }
       }
     }
 

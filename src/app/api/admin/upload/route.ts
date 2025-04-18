@@ -68,7 +68,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      url: urlData.signedUrl
+      url: urlData.signedUrl,
+      name: fileName,
     });
   } catch (error) {
     console.error('Upload API error:', error);

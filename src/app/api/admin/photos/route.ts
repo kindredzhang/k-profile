@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
       title: data.title,
       description: data.description,
       url: data.url,
+      file_name: data.file_name,
       category: data.category,
       tags: data.tags,
       is_featured: data.is_featured || false,
@@ -60,3 +61,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

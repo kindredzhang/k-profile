@@ -17,6 +17,7 @@ export type Photo = {
     title: string | null;
     description: string | null;
     url: string;
+    file_name?: string;
     category?: string | null;
     tags?: string[];
     is_featured?: boolean;

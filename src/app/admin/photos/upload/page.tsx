@@ -76,11 +76,14 @@ export default function PhotoUploadPage() {
 
     try {
       let finalUrl = url;
+      let fileName = '';
 
       // 如果选择了文件，先上传到Supabase Storage
       if (selectedFile && !url) {
         setUploadProgress(10);
-        finalUrl = await uploadImage(selectedFile) || '';
+        const data = await uploadImage(selectedFile) || '';
+        finalUrl = data.url;
+        fileName = data.name;
         setUploadProgress(70);
 
         if (!finalUrl) {
@@ -113,6 +116,7 @@ export default function PhotoUploadPage() {
           title: title || null,
           description: description || null,
           url: finalUrl,
+          file_name: fileName,
           category: category || null,
           tags: tagsArray.length > 0 ? tagsArray : null,
           is_featured: isFeatured,
