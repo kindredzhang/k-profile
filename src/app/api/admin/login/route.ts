@@ -23,19 +23,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 登录成功，设置cookie
-    const response = NextResponse.json({ success: true, user });
-    
-    // 设置cookie，有效期为7天
-    response.cookies.set({
-      name: 'admin_session',
-      value: JSON.stringify({ userId: user.id }),
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7, // 7天
-      path: '/',
-    });
-
-    return response;
+    // 登录成功，返回用户信息
+    // 注意：Supabase 已经在 cookie 中设置了会话信息，我们不需要手动设置
+    return NextResponse.json({ success: true, user });
   } catch (error) {
     console.error('Login API error:', error);
     return NextResponse.json(

@@ -1,4 +1,3 @@
-import { stringToHash } from '@/utils';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
@@ -17,46 +16,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 检查邮箱是否已存在
-    const { data: existingUsers, error: checkError } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email)
-      .limit(1);
+    // 使用 Supabase Auth 注册新用户
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-    if (checkError) {
-      console.error('Error checking existing user:', checkError);
+    if (error) {
+      console.error('Error registering user:', error);
       return NextResponse.json(
-        { error: '注册失败，请稍后再试' },
-        { status: 500 }
-      );
-    }
-
-    if (existingUsers && existingUsers.length > 0) {
-      return NextResponse.json(
-        { error: '该邮箱已被注册' },
-        { status: 400 }
-      );
-    }
-
-    // 对密码进行哈希处理
-    const hashedPassword = stringToHash(password);
-
-    // 插入新用户
-    const { data: newUser, error: insertError } = await supabase
-      .from('users')
-      .insert([
-        {
-          email,
-          password: hashedPassword,
-        },
-      ])
-      .select();
-
-    if (insertError) {
-      console.error('Error inserting new user:', insertError);
-      return NextResponse.json(
-        { error: '注册失败，请稍后再试' },
+        { error: error.message || '注册失败，请稍后再试' },
         { status: 500 }
       );
     }
@@ -65,11 +34,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: '注册成功',
-      user: {
-        id: newUser[0].id,
-        email: newUser[0].email,
-        created_at: newUser[0].created_at,
-      },
+      user: data.user,
     });
   } catch (error) {
     console.error('Registration API error:', error);

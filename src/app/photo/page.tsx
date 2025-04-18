@@ -1,6 +1,8 @@
 import Layout from '@/components/layout/Layout';
 import PhotoGrid from '@/components/photo/PhotoGrid';
 import { getAllPhotos } from '@/lib/db/photos';
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
 
 export const metadata = {
   title: 'Photos | Kindred',
@@ -8,7 +10,12 @@ export const metadata = {
 };
 
 export default async function PhotoPage() {
-  const photos = await getAllPhotos();
+  // 创建 Supabase 客户端
+  const cookieStore = cookies();
+  const supabase = await createClient(cookieStore);
+
+  // 获取所有照片，传递 Supabase 客户端
+  const photos = await getAllPhotos(supabase);
 
   return (
     <Layout>

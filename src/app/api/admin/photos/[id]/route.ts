@@ -1,4 +1,6 @@
 import { deletePhoto, getPhotoById, updatePhoto } from '@/lib/db/photos';
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 // 获取单张照片
@@ -7,6 +9,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // 创建 Supabase 客户端
+    const cookieStore = await cookies();
+    const supabase = await createClient(cookieStore);
+
     const { id } = await params;
     const photoId = parseInt(id);
 
@@ -17,7 +23,7 @@ export async function GET(
       );
     }
 
-    const photo = await getPhotoById(photoId);
+    const photo = await getPhotoById(photoId, supabase);
 
     if (!photo) {
       return NextResponse.json(
@@ -42,6 +48,20 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // 检查用户是否已登录
+    const cookieStore = await cookies();
+    const supabase = await createClient(cookieStore);
+
+    // 获取当前用户会话
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      return NextResponse.json(
+        { error: '未授权，请先登录' },
+        { status: 401 }
+      );
+    }
+
     const { id } = await params;
     const photoId = parseInt(id);
 
@@ -62,7 +82,7 @@ export async function PUT(
       );
     }
 
-    // 更新照片
+    // 更新照片 - 传递带有认证信息的 Supabase 客户端
     const photo = await updatePhoto(photoId, {
       title: data.title,
       description: data.description,
@@ -70,7 +90,7 @@ export async function PUT(
       category: data.category,
       tags: data.tags,
       is_featured: data.is_featured,
-    });
+    }, supabase);
 
     if (!photo) {
       return NextResponse.json(
@@ -98,6 +118,20 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // 检查用户是否已登录
+    const cookieStore = await cookies();
+    const supabase = await createClient(cookieStore);
+
+    // 获取当前用户会话
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      return NextResponse.json(
+        { error: '未授权，请先登录' },
+        { status: 401 }
+      );
+    }
+
     const { id } = await params;
     const photoId = parseInt(id);
 
@@ -108,7 +142,8 @@ export async function DELETE(
       );
     }
 
-    const success = await deletePhoto(photoId);
+    // 删除照片 - 传递带有认证信息的 Supabase 客户端
+    const success = await deletePhoto(photoId, supabase);
 
     if (!success) {
       return NextResponse.json(

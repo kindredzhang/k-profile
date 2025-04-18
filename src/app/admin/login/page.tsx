@@ -43,7 +43,9 @@ export default function LoginPage() {
 
       // 登录成功，保存用户信息到会话存储
       if (data.user) {
-        sessionStorage.setItem('admin_user', JSON.stringify(data.user));
+        // 使用 saveUserToSession 函数保存用户信息
+        const { saveUserToSession } = await import('@/lib/auth-client');
+        saveUserToSession(data.user);
       }
 
       // 重定向到管理员仪表盘
@@ -111,7 +113,7 @@ export default function LoginPage() {
               {loading ? '登录中...' : '登录'}
             </Button>
           </div>
-{/* 
+{/*
           <div className="text-center mt-4">
             <p className="text-sm text-muted-foreground">
               还没有账号？{' '}

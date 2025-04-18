@@ -6,17 +6,20 @@ export type { Photo };
 
 /**
  * 获取所有照片
+ * @param customClient 可选的自定义Supabase客户端
  */
 const supabase = createClient();
-export async function getAllPhotos() {
+export async function getAllPhotos(customClient?: any) {
   try {
+    // 使用提供的客户端或默认客户端
+    const client = customClient || supabase;
+
     // 尝试从数据库获取照片
-    const { data: photos, error } = await supabase
+    const { data: photos, error } = await client
       .from('photos')
       .select('*')
       .order('created_at', { ascending: false });
 
-    console.log('photos', photos);
     if (error) {
       console.warn('Error fetching photos from database:', error);
       return [];
@@ -31,10 +34,14 @@ export async function getAllPhotos() {
 
 /**
  * 获取精选照片
+ * @param customClient 可选的自定义Supabase客户端
  */
-export async function getFeaturedPhotos() {
+export async function getFeaturedPhotos(customClient?: any) {
   try {
-    const { data: photos, error } = await supabase
+    // 使用提供的客户端或默认客户端
+    const client = customClient || supabase;
+
+    const { data: photos, error } = await client
       .from('photos')
       .select('*')
       .eq('is_featured', true)
@@ -47,17 +54,22 @@ export async function getFeaturedPhotos() {
 
     return photos;
   } catch (error) {
-    console.warn('Error in getFeaturedPhotos, using mock data:', error);
+    console.warn('Error in getFeaturedPhotos:', error);
     return [];
   }
 }
 
 /**
  * 根据ID获取单张照片
+ * @param id 照片ID
+ * @param customClient 可选的自定义Supabase客户端
  */
-export async function getPhotoById(id: number) {
+export async function getPhotoById(id: number, customClient?: any) {
   try {
-    const { data: photo, error } = await supabase
+    // 使用提供的客户端或默认客户端
+    const client = customClient || supabase;
+
+    const { data: photo, error } = await client
       .from('photos')
       .select('*')
       .eq('id', id)
@@ -77,10 +89,15 @@ export async function getPhotoById(id: number) {
 
 /**
  * 根据分类获取照片
+ * @param category 分类名称
+ * @param customClient 可选的自定义Supabase客户端
  */
-export async function getPhotosByCategory(category: string) {
+export async function getPhotosByCategory(category: string, customClient?: any) {
   try {
-    const { data: photos, error } = await supabase
+    // 使用提供的客户端或默认客户端
+    const client = customClient || supabase;
+
+    const { data: photos, error } = await client
       .from('photos')
       .select('*')
       .eq('category', category)
@@ -100,10 +117,15 @@ export async function getPhotosByCategory(category: string) {
 
 /**
  * 添加新照片
+ * @param photo 照片数据
+ * @param customClient 可选的自定义Supabase客户端，用于传递认证信息
  */
-export async function addPhoto(photo: Omit<Photo, 'id' | 'created_at' | 'updated_at'>) {
+export async function addPhoto(photo: Omit<Photo, 'id' | 'created_at' | 'updated_at'>, customClient?: any) {
   try {
-    const { data, error } = await supabase
+    // 使用提供的客户端或默认客户端
+    const client = customClient || supabase;
+
+    const { data, error } = await client
       .from('photos')
       .insert([photo])
       .select();
@@ -122,10 +144,16 @@ export async function addPhoto(photo: Omit<Photo, 'id' | 'created_at' | 'updated
 
 /**
  * 更新照片信息
+ * @param id 照片ID
+ * @param updates 更新的数据
+ * @param customClient 可选的自定义Supabase客户端，用于传递认证信息
  */
-export async function updatePhoto(id: number, updates: Partial<Omit<Photo, 'id' | 'created_at' | 'updated_at'>>) {
+export async function updatePhoto(id: number, updates: Partial<Omit<Photo, 'id' | 'created_at' | 'updated_at'>>, customClient?: any) {
   try {
-    const { data, error } = await supabase
+    // 使用提供的客户端或默认客户端
+    const client = customClient || supabase;
+
+    const { data, error } = await client
       .from('photos')
       .update(updates)
       .eq('id', id)
@@ -145,11 +173,16 @@ export async function updatePhoto(id: number, updates: Partial<Omit<Photo, 'id' 
 
 /**
  * 删除照片
+ * @param id 照片ID
+ * @param customClient 可选的自定义Supabase客户端，用于传递认证信息
  */
-export async function deletePhoto(id: number) {
+export async function deletePhoto(id: number, customClient?: any) {
   try {
+    // 使用提供的客户端或默认客户端
+    const client = customClient || supabase;
+
     // 先获取照片信息，以便删除存储中的文件
-    const photo = await getPhotoById(id);
+    const photo = await getPhotoById(id, client);
 
     if (photo && photo.url) {
       // 检查URL是否来自Supabase Storage
@@ -164,7 +197,7 @@ export async function deletePhoto(id: number) {
     }
 
     // 删除数据库中的记录
-    const { error } = await supabase
+    const { error } = await client
       .from('photos')
       .delete()
       .eq('id', id);

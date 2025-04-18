@@ -6,17 +6,17 @@ export async function POST(request: NextRequest) {
   try {
     // 检查用户是否已登录
     const cookieStore = await cookies();
-    const adminSession = cookieStore.get('admin_session');
+    const supabase = await createClient(cookieStore);
 
-    if (!adminSession || !adminSession.value) {
+    // 获取当前用户会话
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
       return NextResponse.json(
         { error: '未授权，请先登录' },
         { status: 401 }
       );
     }
-
-    // 使用服务器端 Supabase 客户端
-    const supabase = await createClient(cookieStore);
 
     // 获取请求体中的 URL
     const { url } = await request.json();
