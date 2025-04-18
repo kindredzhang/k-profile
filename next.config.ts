@@ -7,7 +7,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
-    ], // 允许从Unsplash加载图片
+      {
+        protocol: 'https',
+        hostname: 'afirrfctrbnucipmfybw.supabase.co',
+      },
+    ], // 允许从Unsplash和Supabase加载图片
   },
   // 配置字体加载
   async headers() {
