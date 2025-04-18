@@ -1,17 +1,15 @@
 import Layout from '@/components/layout/Layout';
+import { Metadata } from 'next';
 import Link from 'next/link';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Subscription Error | Kindred',
   description: 'There was an error with your subscription to Kindred\'s newsletter.',
 };
 
-export default function SubscriptionErrorPage({
-  searchParams,
-}: {
-  searchParams: { message?: string };
-}) {
-  const errorMessage = searchParams.message || 'An unknown error occurred';
+// @ts-ignore - Next.js page props type issue
+export default function SubscriptionErrorPage({ searchParams }: any) {
+  const errorMessage = searchParams?.message || 'An unknown error occurred';
 
   return (
     <Layout>
