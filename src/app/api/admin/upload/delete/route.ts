@@ -1,23 +1,8 @@
-import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { withAuthenticatedClient } from '@/lib/db/helpers';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    // 检查用户是否已登录
-    const cookieStore = await cookies();
-    const supabase = await createClient(cookieStore);
-
-    // 获取当前用户会话
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
-      return NextResponse.json(
-        { error: '未授权，请先登录' },
-        { status: 401 }
-      );
-    }
-
     // 获取请求体中的 URL
     const { url } = await request.json();
 
@@ -53,18 +38,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 删除文件
-    const { error } = await supabase.storage
-      .from('photos')
-      .remove([fileName]);
+    // 使用辅助函数执行删除操作
+    const result = await withAuthenticatedClient(async (supabase) => {
+      // 删除文件
+      const { error } = await supabase.storage
+        .from('photos')
+        .remove([fileName]);
 
-    if (error) {
-      console.error('Error deleting file:', error);
-      return NextResponse.json(
-        { error: '文件删除失败' },
-        { status: 500 }
-      );
-    }
+      if (error) {
+        console.error('Error deleting file:', error);
+        throw new Error('文件删除失败');
+      }
+
+      return { success: true };
+    });
 
     return NextResponse.json({
       success: true
@@ -72,7 +59,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Delete API error:', error);
     return NextResponse.json(
-      { error: '服务器错误' },
+      { error: error instanceof Error ? error.message : '服务器错误' },
       { status: 500 }
     );
   }

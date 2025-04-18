@@ -1,24 +1,9 @@
-import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { withAuthenticatedClient } from '@/lib/db/helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request: NextRequest) {
   try {
-    // 检查用户是否已登录
-    const cookieStore = await cookies();
-    const supabase = await createClient(cookieStore);
-
-    // 获取当前用户会话
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
-      return NextResponse.json(
-        { error: '未授权，请先登录' },
-        { status: 401 }
-      );
-    }
-
     // 解析 multipart/form-data 请求
     const formData = await request.formData();
     const file = formData.get('file') as File;
@@ -38,43 +23,45 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const fileBuffer = new Uint8Array(arrayBuffer);
 
-    // 上传文件到 Supabase Storage
-    const { error } = await supabase.storage
-      .from('photos')
-      .upload(fileName, fileBuffer, {
-        contentType: file.type,
-      });
+    // 使用辅助函数执行上传操作
+    const result = await withAuthenticatedClient(async (supabase) => {
+      // 上传文件到 Supabase Storage
+      const { error } = await supabase.storage
+        .from('photos')
+        .upload(fileName, fileBuffer, {
+          contentType: file.type,
+        });
 
-    if (error) {
-      console.error('Error uploading file:', error);
-      return NextResponse.json(
-        { error: '文件上传失败' },
-        { status: 500 }
-      );
-    }
+      if (error) {
+        console.error('Error uploading file:', error);
+        throw new Error('文件上传失败');
+      }
 
-    // 获取签名URL，有效期10年（315360000秒）
-    const { data: urlData, error: signedUrlError } = await supabase.storage
-      .from('photos')
-      .createSignedUrl(fileName, 315360000);
+      // 获取签名URL，有效期10年（315360000秒）
+      const { data: urlData, error: signedUrlError } = await supabase.storage
+        .from('photos')
+        .createSignedUrl(fileName, 315360000);
 
-    if (signedUrlError) {
-      console.error('Error creating signed URL:', signedUrlError);
-      return NextResponse.json(
-        { error: '获取签名URL失败' },
-        { status: 500 }
-      );
-    }
+      if (signedUrlError) {
+        console.error('Error creating signed URL:', signedUrlError);
+        throw new Error('获取签名URL失败');
+      }
+
+      return {
+        url: urlData.signedUrl,
+        name: fileName,
+      };
+    });
 
     return NextResponse.json({
       success: true,
-      url: urlData.signedUrl,
-      name: fileName,
+      url: result.url,
+      name: result.name,
     });
   } catch (error) {
     console.error('Upload API error:', error);
     return NextResponse.json(
-      { error: '服务器错误' },
+      { error: error instanceof Error ? error.message : '服务器错误' },
       { status: 500 }
     );
   }
