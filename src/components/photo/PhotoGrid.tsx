@@ -1,6 +1,6 @@
 'use client';
 
-import { Photo } from '@/lib/db/photos';
+import { Photo } from '@/types';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 

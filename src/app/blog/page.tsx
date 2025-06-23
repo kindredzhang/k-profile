@@ -4,14 +4,13 @@ import { getAllPosts } from '@/lib/db/posts';
 import { Category, ListPost } from '@/types';
 import Link from 'next/link';
 
-export default async function BlogPage() {
+export default async function BlogPage() { // Make it async
   // 从数据库获取文章、分类和标签
   const posts: ListPost[] = await getAllPosts();
   const categories: Category[] = await getAllCategories();
   
   // 按年份分组文章
   const postsByYear = posts.reduce((acc: Record<string, ListPost[]>, post) => {
-    // 使用date字段获取年份
     const date = post.date;
     const year = new Date(date).getFullYear().toString();
     if (!acc[year]) {
@@ -25,7 +24,29 @@ export default async function BlogPage() {
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
 
   return (
-    <div>
+    <div className="container mx-auto px-4 py-4 md:py-6 relative">
+      {/* 背景装饰 */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0 opacity-5">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-primary/10 rounded-full filter blur-3xl"></div>
+      </div>
+      
+      <div className="relative z-10 max-w-2xl mx-auto">
+        {/* 分类标签导航 */}
+        <div className="flex items-center mb-3 border-b border-border pb-2">
+          <div className="flex gap-3 md:gap-5 overflow-x-auto">
+            {categories.map((category: Category) => (
+              <Link 
+                key={category.id}
+                href={`/${category.slug}`}
+                className="text-base md:text-lg font-medium pb-1.5 border-b-2 px-1 transition-all duration-300 border-transparent hover:border-primary/40 text-muted-foreground hover:text-primary/80 opacity-40 hover:opacity-90"
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
       {posts.length > 0 ? (
         <div>
           {/* 按年份分组的文章列表 */}
@@ -71,6 +92,7 @@ export default async function BlogPage() {
           <p className="text-muted-foreground text-sm">No blog posts available...</p>
         </div>
       )}
+      </div>
     </div>
   );
 }

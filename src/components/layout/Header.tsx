@@ -1,6 +1,6 @@
 'use client';
 
-import ThemeToggle from '@/components/ThemeToggle';
+import ThemeToggle from '@/components/theme/ThemeToggle';
 import CDLogo from '@/components/ui/CdLogo';
 import { CameraIcon, EmailIcon, GitHubIcon, TwitterIcon } from '@/components/ui/icons';
 import Link from 'next/link';
@@ -19,9 +19,6 @@ export default function Header() {
             <Link href="/projects" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
               Projects
             </Link>
-            {/* <Link href="/talks" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
-              Talks
-            </Link> */}
             <Link href="/about" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
               About
             </Link>

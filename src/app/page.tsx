@@ -1,5 +1,5 @@
 import { BookIcon, CodeIcon, SendIcon } from '@/components/ui/icons';
-import NewsletterForm from '@/components/NewsletterForm';
+import NewsletterForm from '@/components/home/NewsletterForm';
 import { getStaredPosts } from '@/lib/db/posts';
 import { getProjects } from '@/lib/db/projects';
 import { Project, StarPost } from '@/types';

@@ -1,9 +1,9 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-export default function SiteLogo() {
+export default function CdLogo() {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
 

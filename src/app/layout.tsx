@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
 import "@/app/globals.css";
+import type { Metadata } from "next";
 
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/header";
 import MainContent from "@/components/layout/MainContent";
-import ClientBackToTop from "@/components/ui/ClientBackToTop";
-import ClientMouseGlow from "@/components/ui/ClientMouseGlow"; // 注意：您有两个MouseGlow，这里我们使用Client版本
 import ThemeProvider from "@/components/theme/ThemeProvider";
+import ClientBackToTop from "@/components/ui/back2top/ClientBackToTop";
+import ClientMouseGlow from "@/components/ui/mouseglow/ClientMouseGlow"; // 注意：您有两个MouseGlow，这里我们使用Client版本
 
 export const metadata: Metadata = {
   title: "Kindred Zhang",
