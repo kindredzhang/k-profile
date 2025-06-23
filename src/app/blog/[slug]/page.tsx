@@ -1,4 +1,4 @@
-import ProgressWrapper from '@/components/blog/ProgressWrapper';
+import ReadingProgress from '@/components/blog/ReadingProgress';
 import Layout from '@/components/layout/Layout';
 import { BookIcon } from '@/components/ui/icons';
 import { getPostBySlug } from '@/lib/db';
@@ -19,7 +19,8 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     
     return (
       <Layout>
-        <ProgressWrapper />
+        {/* 计算阅读进度 控制是否出现置顶标识 */}
+        <ReadingProgress />
         
         <div className="container mx-auto px-4 py-4 md:py-10 relative">
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0 opacity-5">
@@ -28,7 +29,6 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
           </div>
           
           <article className="relative z-10 max-w-2xl mx-auto">
-
             <h1 className="text-xl md:text-3xl font-bold mb-2 enhance-text leading-tight">{post.title}</h1>
             
             <div className="flex flex-wrap gap-2 mb-4 text-xs">
