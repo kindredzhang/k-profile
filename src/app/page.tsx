@@ -1,4 +1,3 @@
-import Layout from '@/components/layout/Layout';
 import { BookIcon, CodeIcon, SendIcon } from '@/components/ui/icons';
 import NewsletterForm from '@/components/NewsletterForm';
 import { getStaredPosts } from '@/lib/db/posts';
@@ -15,7 +14,6 @@ const featuredProjects: Project[] = await getProjects(true);
 // 首页组件
 export default async function Home() {
   return (
-    <Layout>
       <div className="container mx-auto px-4 py-6 md:py-8">
         <div className="max-w-5xl mx-auto">
           {/* Hero Section */}
@@ -168,6 +166,5 @@ export default async function Home() {
           <NewsletterForm />
         </div>
       </div>
-    </Layout>
   );
 }

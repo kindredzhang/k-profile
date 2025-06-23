@@ -1,7 +1,3 @@
-import Layout from '@/components/layout/Layout';
-import Link from 'next/link';
-
-// Developer skills
 const skills = [
   {
     category: 'Frontend',
@@ -33,7 +29,6 @@ const projects = [
 
 export default function AboutPage() {
   return (
-    <Layout>
       <div className="container mx-auto px-4 py-10">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-4">About Me</h1>
@@ -183,6 +178,5 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-    </Layout>
   );
 }

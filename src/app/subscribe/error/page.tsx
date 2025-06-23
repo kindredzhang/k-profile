@@ -1,4 +1,3 @@
-import Layout from '@/components/layout/Layout';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -12,7 +11,6 @@ export default function SubscriptionErrorPage({ searchParams }: any) {
   const errorMessage = searchParams?.message || 'An unknown error occurred';
 
   return (
-    <Layout>
       <div className="max-w-2xl mx-auto py-12 px-4">
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-6">
@@ -32,6 +30,5 @@ export default function SubscriptionErrorPage({ searchParams }: any) {
           </Link>
         </div>
       </div>
-    </Layout>
   );
 }

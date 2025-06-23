@@ -1,5 +1,5 @@
 import ReadingProgress from '@/components/blog/ReadingProgress';
-import Layout from '@/components/layout/Layout';
+// import Layout from '@/components/layout/Layout';
 import { BookIcon } from '@/components/ui/icons';
 import { getPostBySlug } from '@/lib/db';
 import { formattedDate, readingTime } from '@/utils';
@@ -18,7 +18,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     }
     
     return (
-      <Layout>
+      <div>
         {/* 计算阅读进度 控制是否出现置顶标识 */}
         <ReadingProgress />
         
@@ -66,7 +66,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
             </div>
           </article>
         </div>
-      </Layout>
+      </div>
     );
   } catch (error) {
     console.error('Error in Post page component:', error);

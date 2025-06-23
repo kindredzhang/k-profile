@@ -1,7 +1,12 @@
-import MouseGlow from "@/components/effects/MouseGlow";
-import ThemeProvider from "@/components/theme/ThemeProvider";
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
+
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import MainContent from "@/components/layout/MainContent";
+import ClientBackToTop from "@/components/ui/ClientBackToTop";
+import ClientMouseGlow from "@/components/ui/ClientMouseGlow"; // 注意：您有两个MouseGlow，这里我们使用Client版本
+import ThemeProvider from "@/components/theme/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Kindred Zhang",
@@ -17,13 +22,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <head>
-        {/* No inline script - using ThemeProvider instead */}
-      </head>
-      <body className="font-sans antialiased relative overflow-x-hidden">
+      <head />
+      <body className="font-sans antialiased bg-gray-50 dark:bg-[#050505] relative w-screen overflow-x-hidden">
         <ThemeProvider>
-          <MouseGlow />
-          {children}
+          <div className="dot-pattern"></div>
+          <div className="gradient-sphere absolute top-40 left-1/4 w-96 h-96 opacity-50 dark:opacity-30"></div>
+          <div className="gradient-sphere absolute bottom-40 right-1/4 w-80 h-80 opacity-50 dark:opacity-30"></div>
+
+          <ClientMouseGlow />
+          <ClientBackToTop />
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <MainContent>{children}</MainContent>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>

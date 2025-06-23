@@ -12,7 +12,6 @@ export default function ReadingProgress() {
       if (!contentElement) return;
 
       const contentHeight = contentElement.scrollHeight - contentElement.clientHeight;
-      const windowScrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
       
       const distance = contentElement.getBoundingClientRect().top;

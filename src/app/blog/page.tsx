@@ -1,4 +1,3 @@
-import BlogLayout from '@/components/blog/BlogLayout';
 import { BookIcon } from '@/components/ui/icons';
 import { getAllCategories } from '@/lib/db/categories';
 import { getAllPosts } from '@/lib/db/posts';
@@ -26,7 +25,7 @@ export default async function BlogPage() {
   const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
 
   return (
-    <BlogLayout categories={categories} activeCategory="blog">
+    <div>
       {posts.length > 0 ? (
         <div>
           {/* 按年份分组的文章列表 */}
@@ -72,6 +71,6 @@ export default async function BlogPage() {
           <p className="text-muted-foreground text-sm">No blog posts available...</p>
         </div>
       )}
-    </BlogLayout>
+    </div>
   );
 }
