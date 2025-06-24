@@ -46,7 +46,7 @@ export default function ReadingProgress() {
 
   return (
     <div 
-      className="reading-progress" 
+      className="fixed top-0 left-0 z-[100] h-1 w-full origin-left bg-primary"
       style={{ transform: `scaleX(${readingProgress / 100})` }}
     />
   );

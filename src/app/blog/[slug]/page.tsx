@@ -29,38 +29,21 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
           </div>
           
           <article className="relative z-10 max-w-2xl mx-auto">
-            <h1 className="text-xl md:text-3xl font-bold mb-2 enhance-text leading-tight">{post.title}</h1>
+            <h1 className="text-2xl md:text-4xl font-bold mb-2 leading-tight">{post.title}</h1>
             
-            <div className="flex flex-wrap gap-2 mb-4 text-xs">
-              <div className="text-xs text-muted-foreground opacity-75">
-                {formattedDate(post.date)} | {readingTime(post.content)}
-              </div>
+            <div className="flex items-center space-x-2 mb-8 text-sm text-muted-foreground">
+              <span>{formattedDate(post.date)}</span>
+              <span>&middot;</span>
+              <span>{readingTime(post.content)}</span>
             </div>
             
-            <div className="prose dark:prose-invert max-w-none
-                prose-headings:font-bold prose-headings:enhance-text
-                prose-h1:text-xl prose-h1:mt-8 prose-h1:mb-4
-                prose-h2:text-lg prose-h2:mt-7 prose-h2:mb-3
-                prose-h3:text-base prose-h3:mt-6 prose-h3:mb-2
-                prose-h4:text-base prose-h4:mt-4 prose-h4:mb-1
-                prose-p:text-sm prose-p:leading-relaxed prose-p:my-3
-                prose-ul:my-3 prose-ol:my-3 prose-li:text-sm
-                prose-li:my-1 prose-li:marker:text-primary/70
-                prose-img:rounded-lg prose-img:my-4
-                prose-a:text-primary hover:prose-a:text-primary/80 hover:prose-a:underline
-                prose-pre:text-sm prose-pre:p-4 prose-pre:my-3
-                prose-pre:bg-zinc-900 dark:prose-pre:bg-zinc-900/60 prose-pre:leading-relaxed
-                prose-code:text-sm prose-code:bg-primary/10 prose-code:p-0.5 prose-code:rounded
-                prose-blockquote:text-sm prose-blockquote:border-l-4 prose-blockquote:border-primary/40 
-                prose-blockquote:bg-zinc-100 dark:prose-blockquote:bg-zinc-800/30 
-                prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r
-                prose-strong:font-bold prose-strong:text-primary/90 prose-hr:border-zinc-200 dark:prose-hr:border-zinc-700">
+            <div className="prose dark:prose-invert max-w-none">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
 
-            <div className="mb-3">
-              <Link href="/blog" className="text-xs inline-flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors">
-                <BookIcon className="w-3 h-3" />
+            <div className="mt-8 mb-4">
+              <Link href="/blog" className="text-sm inline-flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors">
+                <BookIcon className="w-4 h-4" />
                 <span>cd ..</span>
               </Link>
             </div>

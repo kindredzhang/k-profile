@@ -4,7 +4,7 @@ import { getAllPosts } from '@/lib/db/posts';
 import { Category, ListPost } from '@/types';
 import Link from 'next/link';
 
-export default async function BlogPage() { // Make it async
+export default async function BlogPage() {
   // 从数据库获取文章、分类和标签
   const posts: ListPost[] = await getAllPosts();
   const categories: Category[] = await getAllCategories();
@@ -25,14 +25,12 @@ export default async function BlogPage() { // Make it async
 
   return (
     <div className="container mx-auto px-4 py-4 md:py-6 relative">
-      {/* 背景装饰 */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0 opacity-5">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full filter blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-primary/10 rounded-full filter blur-3xl"></div>
       </div>
       
       <div className="relative z-10 max-w-2xl mx-auto">
-        {/* 分类标签导航 */}
         <div className="flex items-center mb-3 border-b border-border pb-2">
           <div className="flex gap-3 md:gap-5 overflow-x-auto">
             {categories.map((category: Category) => (
@@ -49,16 +47,13 @@ export default async function BlogPage() { // Make it async
 
       {posts.length > 0 ? (
         <div>
-          {/* 按年份分组的文章列表 */}
           {years.map((year) => (
             <div key={year} className="mb-8">
-              {/* 年份标题 - 简化版 */}
               <div className="relative mb-3">
-                <h2 className="text-3xl font-bold opacity-20 enhance-text">{year}</h2>
+                <h2 className="text-3xl font-bold opacity-20 ">{year}</h2>
                 <div className="absolute bottom-0 left-0 w-full border-b border-border/30"></div>
               </div>
               
-              {/* 该年份的文章 - 简化列表 */}
               <div className="space-y-1.5">
                 {postsByYear[year].map((post) => (
                   <article key={post.id} className="group transition-all duration-300">

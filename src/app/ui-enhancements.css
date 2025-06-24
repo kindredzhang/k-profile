@@ -1,13 +1,5 @@
-/* 增强文本阴影和视觉层次 */
-.enhance-text {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.dark .enhance-text {
-  text-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
-}
-
 /* 简洁按钮样式 */
+/* Read My Blog */
 .gradient-btn {
   border: 1px solid #3b82f6;
   background-color: #3b82f6;
@@ -19,27 +11,8 @@
   box-shadow: 0 10px 25px -10px rgba(59, 130, 246, 0.5);
 }
 
-.secondary-btn {
-  background-color: transparent;
-  border: 1px solid var(--border);
-  color: var(--foreground);
-  transition: background-color 0.2s ease;
-}
-
-.secondary-btn:hover {
-  background-color: var(--secondary);
-}
-
-.dark .secondary-btn {
-  border-color: rgba(75, 85, 99, 0.4);
-  color: var(--foreground);
-}
-
-.dark .secondary-btn:hover {
-  background-color: rgba(75, 85, 99, 0.2);
-}
-
 /* 卡片阴影和悬停效果 */
+/* Featured Projects Card */
 .enhanced-card {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,6 +32,7 @@
 }
 
 /* 导航链接样式 */
+/* Blog Projects About in header, if mouse hover button' bottom has a Progress */
 .nav-link {
   position: relative;
   padding-bottom: 2px;
@@ -66,7 +40,7 @@
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 2px;
@@ -79,44 +53,4 @@
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
-}
-
-/* 渐变边框头像 */
-.gradient-border {
-  position: relative;
-  z-index: 0;
-  border-radius: 50%;
-  padding: 4px;
-  background: linear-gradient(90deg, var(--primary), rgba(99, 102, 241, 0.8));
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border-radius: 50%;
-  padding: 4px;
-  background: linear-gradient(90deg, var(--primary), rgba(99, 102, 241, 0.8));
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
-/* 增强响应式间距 */
-@media (max-width: 768px) {
-  .responsive-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-  
-  .responsive-card {
-    padding: 16px !important;
-  }
-  
-  .responsive-text {
-    font-size: 14px !important;
-  }
 }
