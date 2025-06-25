@@ -8,7 +8,6 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
   const [mounted, setMounted] = useState(false);
   const [visiblePhotos, setVisiblePhotos] = useState<number[]>([]);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
   const photoRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
@@ -17,33 +16,23 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
   
   useEffect(() => {
     if (!mounted) return;
-    
-    // 创建交叉观察器，用于检测照片是否进入视口
-    observerRef.current = new IntersectionObserver((entries) => {
+
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const index = Number(entry.target.getAttribute('data-index'));
-          if (!isNaN(index) && !visiblePhotos.includes(index)) {
-            setVisiblePhotos(prev => [...prev, index]);
-            // 照片显示后，取消观察
-            observerRef.current?.unobserve(entry.target);
+          if (!isNaN(index)) {
+            setVisiblePhotos(prev => prev.includes(index) ? prev : [...prev, index]);
+            observer.unobserve(entry.target);
           }
         }
       });
     }, { threshold: 0.1 });
-    
-    // 观察所有照片元素
-    photoRefs.current.forEach((ref, index) => {
-      if (ref) {
-        observerRef.current?.observe(ref);
-      }
-    });
-    
-    return () => {
-      // 清理观察器
-      observerRef.current?.disconnect();
-    };
-  }, [mounted, visiblePhotos]);
+
+    photoRefs.current.forEach(ref => ref && observer.observe(ref));
+
+    return () => observer.disconnect();
+  }, [mounted]);
 
   if (!mounted) return null;
 
@@ -76,12 +65,12 @@ export default function PhotoGrid({ photos }: { photos: Photo[] }) {
       {/* 全屏照片查看器 */}
       {selectedPhoto && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm animate-in fade-in-0 duration-200 ease-out"
           onClick={() => setSelectedPhoto(null)}
         >
           <div 
-            className="relative max-w-[95vw] max-h-[95vh] overflow-hidden animate-zoom-in"
-            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            className="relative max-w-[95vw] max-h-[95vh] overflow-hidden animate-in zoom-in-90 duration-300 ease-out"
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
           >
             <Image
               src={selectedPhoto.url}
