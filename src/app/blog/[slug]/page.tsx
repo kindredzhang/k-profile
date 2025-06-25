@@ -1,5 +1,3 @@
-import ReadingProgress from '@/components/blog/ReadingProgress';
-// import Layout from '@/components/layout/Layout';
 import { BookIcon } from '@/components/ui/icons';
 import { getPostBySlug } from '@/lib/db';
 import { formattedDate, readingTime } from '@/utils';
@@ -18,10 +16,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     }
     
     return (
-      <div>
-        {/* 计算阅读进度 控制是否出现置顶标识 */}
-        <ReadingProgress />
-        
+      <div>        
         <div className="container mx-auto px-4 py-4 md:py-10 relative">
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0 opacity-5">
             <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full filter blur-3xl"></div>

@@ -8,16 +8,12 @@ export default function BackToTop() {
   const [isPulsing, setIsPulsing] = useState(false);
   const wasVisibleRef = useRef(false);
 
-  // Handle scroll event to show/hide the button
   useEffect(() => {
     const toggleVisibility = () => {
-      // Show button when page is scrolled down 300px
       const shouldBeVisible = window.scrollY > 300;
 
-      // If button wasn't visible before but should be now, trigger pulse animation
       if (!wasVisibleRef.current && shouldBeVisible) {
         setIsPulsing(true);
-        // Stop pulsing after 2 seconds
         setTimeout(() => setIsPulsing(false), 2000);
       }
 
@@ -25,17 +21,13 @@ export default function BackToTop() {
       setIsVisible(shouldBeVisible);
     };
 
-    // Add scroll event listener
     window.addEventListener('scroll', toggleVisibility);
 
-    // Initial check
     toggleVisibility();
 
-    // Clean up event listener
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
-  // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
