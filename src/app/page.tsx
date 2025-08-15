@@ -20,7 +20,7 @@ export default async function Home() {
           <div className="mb-10 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="md:max-w-xl">
               <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4 leading-tight">
-                <span className="text-primary">Hi,</span> I'm Kindred
+                <span className="text-primary">Hi,</span> I&apos;m Kindred
               </h1>
 
               <p className="text-base md:text-lg text-muted-foreground mb-6 leading-relaxed">

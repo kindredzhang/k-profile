@@ -25,7 +25,7 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center space-x-2">
-            <a href="/photo" className="text-foreground hover:text-primary transition-colors p-1.5">
+            <a href="/photos" className="text-foreground hover:text-primary transition-colors p-1.5">
               <CameraIcon className="w-4 h-4" />
             </a>
             <a href="https://github.com/kindredzhang" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors p-1.5">

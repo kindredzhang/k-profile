@@ -1,9 +1,17 @@
+/* Import highlight.js theme */
+@import 'highlight.js/styles/github-dark.css';
+
 /* 博客文章样式 */
 .prose {
   color: var(--foreground);
   max-width: 65ch;
   font-size: 1rem;
   line-height: 1.75;
+}
+
+.prose-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6) {

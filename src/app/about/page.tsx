@@ -37,15 +37,15 @@ export default function AboutPage() {
             <h2 className="text-xl font-semibold mb-4 text-primary">Journey as an Independent Developer</h2>
             
             <p className="text-base mb-4">
-              I'm an independent developer passionate about creating elegant solutions to complex problems. My journey in software development began with a curiosity about how digital tools could enhance our daily lives and has evolved into a dedicated pursuit of crafting high-quality, user-centered applications.
+              I&apos;m an independent developer passionate about creating elegant solutions to complex problems. My journey in software development began with a curiosity about how digital tools could enhance our daily lives and has evolved into a dedicated pursuit of crafting high-quality, user-centered applications.
             </p>
             
             <p className="text-base mb-4">
-              As someone who values continuous learning, I'm constantly exploring new technologies and methodologies to improve my craft. I believe in writing clean, maintainable code and creating experiences that delight users while solving real problems.
+              As someone who values continuous learning, I&apos;m constantly exploring new technologies and methodologies to improve my craft. I believe in writing clean, maintainable code and creating experiences that delight users while solving real problems.
             </p>
             
             <p className="text-base">
-              When I'm not coding, I enjoy sharing my knowledge through blog posts and contributing to open-source projects that align with my values of accessibility, performance, and developer experience.
+              When I&apos;m not coding, I enjoy sharing my knowledge through blog posts and contributing to open-source projects that align with my values of accessibility, performance, and developer experience.
             </p>
           </div>
           
@@ -139,7 +139,7 @@ export default function AboutPage() {
           <div className="bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border/50">
             <h2 className="text-xl font-semibold mb-4 text-primary">Support My Work</h2>
             <p className="text-base mb-5">
-              As an independent developer, I'm committed to creating valuable open-source software and educational content. If you appreciate my work, there are several ways you can show support:
+              As an independent developer, I&apos;m committed to creating valuable open-source software and educational content. If you appreciate my work, there are several ways you can show support:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="flex flex-col items-center p-4 rounded-lg border border-border bg-card/50 transition-all hover:border-primary/30">

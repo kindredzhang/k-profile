@@ -8,8 +8,8 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
       {
-        protocol: 'https',
-        hostname: 'afirrfctrbnucipmfybw.supabase.co',
+        protocol: 'http',
+        hostname: '112.124.6.68',
       },
     ], // 允许从Unsplash和Supabase加载图片
   },

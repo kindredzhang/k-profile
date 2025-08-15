@@ -86,6 +86,9 @@ export async function getAllPosts(): Promise<ListPost[]> {
       // 从文件名获取 slug (移除 .md 扩展名)
       const slug = filename.replace(/\.md$/, '');
 
+      // 创建文章摘要（取前150个字符）
+      const excerpt = content.replace(/^#+\s.*$/gm, '').trim().slice(0, 150) + (content.length > 150 ? '...' : '');
+
       // 创建文章对象
       const post: ListPost = {
         id: `${categorySlug}-${slug}`,
@@ -94,7 +97,10 @@ export async function getAllPosts(): Promise<ListPost[]> {
         // url: `/blog/${categorySlug}/${slug}`,
         // 展示不对不同的category 区分页面
         url: `/blog/${slug}`,
-        reading_time: readingTime(content)
+        reading_time: readingTime(content),
+        excerpt: excerpt,
+        tags: data.tags || [],
+        category: categorySlug
       };
 
       allPosts.push(post);
@@ -111,18 +117,25 @@ export async function getStaredPosts(): Promise<ListPost[]> {
   const allPosts = await getAllPosts();
   return allPosts.filter(post => {
     // Extract categorySlug and slug from the post ID
-    const [categorySlug, slug] = post.id.split('-');
+    // post.id format: "categorySlug-slug" where slug might contain hyphens
+    const firstHyphenIndex = post.id.indexOf('-');
+    const categorySlug = post.id.substring(0, firstHyphenIndex);
+    const slug = post.id.substring(firstHyphenIndex + 1);
 
     // Get the post content to check if it's starred
     const postsDirectory = path.join(process.cwd(), 'public', 'posts');
     const filePath = path.join(postsDirectory, categorySlug, `${slug}.md`);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-
-    // Use gray-matter to parse frontmatter
-    const { data } = matter(fileContents);
-
-    // Return only starred posts
-    return data.star === true;
+    
+    try {
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      // Use gray-matter to parse frontmatter
+      const { data } = matter(fileContents);
+      // Return only starred posts
+      return data.star === true;
+    } catch (error) {
+      console.error(`Error reading file ${filePath}:`, error);
+      return false;
+    }
   });
 }
 
@@ -156,14 +169,14 @@ export async function getPostBySlug(slug: string): Promise<DetailPost | null> {
       // 使用 gray-matter 解析 frontmatter
       const { data, content } = matter(fileContents);
 
-      // 只收集标记为star的文章
-      if (data.star === true) {
-        // 从文件名获取 slug (移除 .md 扩展名)
-        const slug = filename.replace(/\.md$/, '');
-
+      // 从文件名获取 slug (移除 .md 扩展名)
+      const fileSlug = filename.replace(/\.md$/, '');
+      
+      // 检查是否匹配请求的slug
+      if (fileSlug === slug) {
         // 创建文章对象
         const post: DetailPost = {
-          id: `${categorySlug}-${slug}`,
+          id: `${categorySlug}-${fileSlug}`,
           title: data.title || 'Untitled',
           date: formattedDate(data.date || new Date().toISOString()),
           content: content,

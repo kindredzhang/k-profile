@@ -12,14 +12,14 @@ export function AboutMe() {
                 <div className="flex items-start gap-3">
                     <CalendarDays className="h-5 w-5 mt-0.5 flex-shrink-0 text-gray-500" />
                     <p>
-                        <strong>I'm passionate about creating tools and libraries</strong> that help developers build better applications. My focus is on performance, developer experience, and beautiful design.
+                        <strong>I&apos;m passionate about creating tools and libraries</strong> that help developers build better applications. My focus is on performance, developer experience, and beautiful design.
                     </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                     <TrendingUp className="h-5 w-5 mt-0.5 flex-shrink-0 text-gray-500" />
                     <p>
-                        <strong>When I'm not coding,</strong> you can find me listening to rock music, reading science fiction, or experimenting with new photography.
+                        <strong>When I&apos;m not coding,</strong> you can find me listening to rock music, reading science fiction, or experimenting with new photography.
                     </p>
                 </div>
             </div>

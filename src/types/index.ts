@@ -25,6 +25,17 @@ export type Photo = {
     updated_at: string;
 };
 
+// Simple Photo type for local photos
+export type LocalPhoto = {
+    id: string;
+    src: string;
+    alt: string;
+    date: string;
+    location?: string;
+    description?: string;
+    tags?: string[];
+};
+
 
 // Post
 export type StarPost = {
@@ -36,6 +47,9 @@ export type StarPost = {
 
 export type ListPost = StarPost & {
     reading_time: string;
+    excerpt?: string;
+    tags?: string[];
+    category?: string;
 }
 
 export type DetailPost = StarPost & {
