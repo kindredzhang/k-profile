@@ -1,5 +1,6 @@
 // 'use client';
 
+
 // import { SendIcon } from 'lucide-react';
 
 // export default function NewsletterForm() {
