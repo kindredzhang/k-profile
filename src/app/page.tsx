@@ -1,6 +1,7 @@
 // import NewsletterForm from '@/components/home/NewsletterForm';
 import { EmailIcon, GitHubIcon, TwitterIcon } from '@/components/ui/icons';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -20,9 +21,11 @@ export default function Home() {
           </div>
 
           <div className="hidden md:block relative w-40 h-40 gradient-border">
-            <img
+            <Image
               src="/images/avatar.jpg"
               alt="Profile picture"
+              width={160}
+              height={160}
               className="absolute inset-0 rounded-full object-cover w-full h-full"
             />
           </div>

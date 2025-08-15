@@ -41,7 +41,7 @@ export default function AboutPage() {
             </p>
             
             <p className="text-base mb-4">
-              With expertise in LLM integration and modern web technologies, I build everything from conversational AI interfaces to complex automation systems. I'm passionate about making AI accessible and practical for businesses of all sizes.
+              With expertise in LLM integration and modern web technologies, I build everything from conversational AI interfaces to complex automation systems. I&apos;m passionate about making AI accessible and practical for businesses of all sizes.
             </p>
             
             <p className="text-base">
@@ -137,9 +137,9 @@ export default function AboutPage() {
           </div>
           
           <div className="bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border/50">
-            <h2 className="text-xl font-semibold mb-4 text-primary">Let's Build Something Together</h2>
+            <h2 className="text-xl font-semibold mb-4 text-primary">Let&apos;s Build Something Together</h2>
             <p className="text-base mb-5">
-              Interested in AI automation, full-stack development, or exploring new possibilities with intelligent systems? I'm always open to discussing innovative projects and collaboration opportunities.
+              Interested in AI automation, full-stack development, or exploring new possibilities with intelligent systems? I&apos;m always open to discussing innovative projects and collaboration opportunities.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="flex flex-col items-center p-4 rounded-lg border border-border bg-card/50 transition-all hover:border-primary/30">
@@ -170,7 +170,7 @@ export default function AboutPage() {
                 </svg>
                 <h3 className="text-base font-medium mb-2">Collaboration</h3>
                 <p className="text-xs text-center text-muted-foreground">
-                  Partner with me on innovative projects that push the boundaries of what's possible with AI.
+                  Partner with me on innovative projects that push the boundaries of what&apos;s possible with AI.
                 </p>
               </div>
             </div>

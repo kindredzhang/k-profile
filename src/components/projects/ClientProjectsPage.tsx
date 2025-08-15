@@ -48,7 +48,7 @@ export default function ClientProjectsPage({ featuredProjects, otherProjects }: 
             My Projects
           </h1>
           <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
-            A collection of AI agents, full-stack applications, and developer tools I've built to solve real-world problems.
+            A collection of AI agents, full-stack applications, and developer tools I&apos;ve built to solve real-world problems.
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export default function ClientProjectsPage({ featuredProjects, otherProjects }: 
         <div className="text-center py-8 border-t border-border/50">
           <h3 className="font-playfair text-lg font-semibold mb-2">Have an idea?</h3>
           <p className="text-muted-foreground text-sm mb-5 max-w-lg mx-auto">
-            I'm always interested in collaborating on innovative projects. Let's build something amazing together.
+            I&apos;m always interested in collaborating on innovative projects. Let&apos;s build something amazing together.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
