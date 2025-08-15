@@ -5,13 +5,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
+        hostname: 'photos.kindred.blog',
       },
-      {
-        protocol: 'http',
-        hostname: '112.124.6.68',
-      },
-    ], // 允许从Unsplash和Supabase加载图片
+    ], 
   },
   // 配置字体加载
   async headers() {
