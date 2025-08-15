@@ -1,136 +1,121 @@
-import { AboutMe } from '@/components/home/AboutMe';
-import NewsletterForm from '@/components/home/NewsletterForm';
-import { BookIcon, CodeIcon } from '@/components/ui/icons';
-import { getStaredPosts } from '@/lib/db/posts';
-import { getProjects } from '@/lib/db/projects';
-import { Project, StarPost } from '@/types';
+// import NewsletterForm from '@/components/home/NewsletterForm';
+import { EmailIcon, GitHubIcon, TwitterIcon } from '@/components/ui/icons';
 import Link from 'next/link';
 
-// 模拟最近博客文章数据
-const recentPosts: StarPost[] = await getStaredPosts();
-
-// 模拟精选项目数据
-const featuredProjects: Project[] = await getProjects(true);
-
-export default async function Home() {
+export default function Home() {
   return (
-      <div className="container mx-auto px-4 py-6 md:py-8">
-        <div className="max-w-5xl mx-auto">
-          {/* Hero Section */}
-          <div className="mb-10 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div className="md:max-w-xl">
-              <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4 leading-tight">
-                <span className="text-primary">Hi,</span> I&apos;m Kindred
-              </h1>
+    <div className="container mx-auto px-4 py-4 md:py-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Hero Section */}
+        <div className="mb-8 md:mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="md:max-w-xl">
+            <h1 className="font-playfair text-3xl md:text-4xl font-bold mb-3 leading-tight">
+              <span className="text-primary">Hi,</span> I&apos;m Kindred
+            </h1>
 
-              <p className="text-base md:text-lg text-muted-foreground mb-6 leading-relaxed">
-                AI agent developer and full-stack engineer building intelligent systems and web applications.
-                Focused on LLM integration, automation tools, and creating seamless user experiences.
-              </p>
-
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center justify-center rounded-md gradient-btn px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm gap-2"
-                >
-                  <BookIcon width="18" height="18" />
-                  Read My Blog
-                </Link>
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center justify-center rounded-md px-5 py-2 text-sm font-medium text-foreground shadow-sm gap-2 bg-transparent border border-border transition-colors hover:bg-secondary dark:border-[rgba(75,85,99,0.4)] dark:hover:bg-[rgba(75,85,99,0.2)]"
-                >
-                  <CodeIcon width="18" height="18" />
-                  View Projects
-                </Link>
-              </div>
-            </div>
-
-            <div className="hidden md:block relative w-48 h-48 gradient-border">
-              <img
-                src="/images/avatar.jpg"
-                alt="Profile picture"
-                className="absolute inset-0 rounded-full object-cover w-full h-full"
-              />
-            </div>
+            <p className="text-sm md:text-base text-muted-foreground mb-4 leading-relaxed">
+              AI agent developer and full-stack engineer building intelligent systems and web applications.
+              Focused on LLM integration, automation tools, and creating seamless user experiences.
+            </p>
           </div>
 
-          {/* Recent Posts Section */}
-          <div className="mb-12 md:mb-16">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="font-playfair text-xl font-bold  flex items-center gap-2">
-                <BookIcon width="22" height="22" className="text-primary" />
-                Recent Posts
-              </h2>
-              <Link href="/blog" className="text-primary hover:underline text-sm inline-flex items-center gap-1">
-                View all
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {recentPosts.map((post) => (
-                <article key={post.id} className="group border border-border rounded-lg overflow-hidden hover:border-primary/30 transition-all duration-300 bg-card/80 backdrop-blur-sm hover:backdrop-blur-md hover:bg-card/95 hover:shadow-sm enhanced-card">
-                  <Link href={post.url!} className="block p-4">
-                    <time className="text-xs text-primary/80 font-medium mb-2 block">{post.date}</time>
-                    <h3 className="text-base font-medium group-hover:text-primary transition-colors line-clamp-2 flex items-center gap-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary/60 group-hover:text-primary transition-colors">
-                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                      </svg>
-                      {post.title}
-                    </h3>
-                  </Link>
-                </article>
-              ))}
-            </div>
+          <div className="hidden md:block relative w-40 h-40 gradient-border">
+            <img
+              src="/images/avatar.jpg"
+              alt="Profile picture"
+              className="absolute inset-0 rounded-full object-cover w-full h-full"
+            />
           </div>
-
-          {/* Featured Projects Section */}
-          <div className="mb-12 md:mb-16">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="font-playfair text-xl font-bold  flex items-center gap-2">
-                <CodeIcon width="22" height="22" className="text-primary" />
-                Featured Projects
-              </h2>
-              <Link href="/projects" className="text-primary hover:underline text-sm inline-flex items-center gap-1">
-                View all
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-              {featuredProjects.map((project) => (
-                <Link
-                  key={project.id}
-                  href={project.url}
-                  className="group block p-4 rounded-lg border border-border bg-card/80 backdrop-blur-sm hover:backdrop-blur-md hover:border-primary/30 hover:bg-card/95 hover:shadow-sm transition-all duration-300 enhanced-card flex flex-col"
-                >
-                  <h3 className="text-base font-medium mb-2 group-hover:text-primary transition-colors flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary/60 group-hover:text-primary transition-colors flex-shrink-0">
-                      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"></path>
-                      <path d="M18 9V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1Z"></path>
-                    </svg>
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground flex-1">{project.description}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* About Section */}
-          <AboutMe />
-
-          {/* Newsletter Section */}
-          <NewsletterForm />
         </div>
+
+        {/* Brief Introduction */}
+        <div className="mb-10 md:mb-12">
+          <p className="text-base leading-relaxed mb-6">
+            Creator of <Link href="/projects" className="text-primary hover:underline font-medium">AI Agent Platform</Link> and various full-stack applications. <br />
+            Core expertise in <span className="text-primary font-medium">LangChain</span>, <span className="text-primary font-medium">LangGraph</span>,{' '}
+            <span className="text-primary font-medium">Next.js</span>, and <span className="text-primary font-medium">TypeScript</span>.
+          </p>
+
+          <p className="text-base leading-relaxed">
+            Dreaming up intelligent solutions and making them come true is where my passion lies. I write about AI development and full-stack engineering on my{' '}
+            <Link href="/blog" className="text-primary hover:underline font-medium">blog</Link>.
+            You can find my full projects list <Link href="/projects" className="text-primary hover:underline font-medium">here</Link>.
+          </p>
+        </div>
+
+        {/* Current Focus */}
+        <div className="mb-10 md:mb-12">
+          <h2 className="text-xl font-bold mb-5 text-primary">Current Focus</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-5 rounded-lg border border-border bg-card/50 hover:bg-card/70 transition-all">
+              <h3 className="text-base font-semibold mb-3 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary mr-2">
+                  <path d="M9 12l2 2 4-4"></path>
+                  <path d="M21 12c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1z"></path>
+                  <path d="M14 3v4a2 2 0 0 0 2 2h4"></path>
+                  <path d="M18 21v-5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v5"></path>
+                </svg>
+                AI Agent Development
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Building intelligent agents with LangChain and OpenAI that can handle complex workflows,
+                integrate with multiple APIs, and provide natural language interfaces for business automation.
+              </p>
+            </div>
+            <div className="p-5 rounded-lg border border-border bg-card/50 hover:bg-card/70 transition-all">
+              <h3 className="text-base font-semibold mb-3 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary mr-2">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                Full-Stack Applications
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Creating end-to-end web applications with React, Next.js, and TypeScript.
+                Focus on scalable architecture, modern UI/UX, and seamless user experiences across various domains.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Connect */}
+        <div className="mb-10 md:mb-12">
+          <h2 className="text-xl font-bold mb-5 text-primary">Find me on</h2>
+          <div className="flex flex-wrap items-center gap-4">
+            <a
+              href="https://github.com/kindredzhang"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-card/50 hover:bg-card/70 transition-colors text-sm"
+            >
+              <GitHubIcon className="w-4 h-4" />
+              GitHub
+            </a>
+            <a
+              href="https://twitter.com/wanchun__"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-card/50 hover:bg-card/70 transition-colors text-sm"
+            >
+              <TwitterIcon className="w-4 h-4" />
+              Twitter
+            </a>
+            <a
+              href="mailto:kindred.zhang.life@gmail.com"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-card/50 hover:bg-card/70 transition-colors text-sm"
+            >
+              <EmailIcon className="w-4 h-4" />
+              Email
+            </a>
+            <span className="text-muted-foreground text-sm">
+              Or mail me at <a href="mailto:kindred.zhang.life@gmail.com" className="text-primary hover:underline">kindred.zhang.life@gmail.com</a>
+            </span>
+          </div>
+        </div>
+
+        {/* Newsletter Section */}
+        {/* <NewsletterForm /> */}
       </div>
+    </div>
   );
 }
