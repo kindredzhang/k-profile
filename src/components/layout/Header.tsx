@@ -4,22 +4,27 @@ import ThemeToggle from '@/components/theme/ThemeToggle';
 import CDLogo from '@/components/ui/CdLogo';
 import { CameraIcon, EmailIcon, GitHubIcon, TwitterIcon } from '@/components/ui/icons';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
   return (
     <header className="w-full border-b border-border bg-background/60 backdrop-blur-xl py-2 sticky top-0 z-50 transition-all duration-300 shadow-sm">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <CDLogo />
+        {/* Left side - Logo or spacer */}
+        {isHomePage ? <div></div> : <CDLogo />}
 
         <div className="flex items-center space-x-4">
           <nav className="hidden md:flex space-x-4">
-            <Link href="/blog" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
+            <Link href="/blog" className="nav-link text-muted-foreground text-sm font-medium hover:text-primary transition-colors">
               Blog
             </Link>
-            <Link href="/projects" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
+            <Link href="/projects" className="nav-link text-muted-foreground text-sm font-medium hover:text-primary transition-colors">
               Projects
             </Link>
-            <Link href="/about" className="nav-link text-muted-foreground text-sm font-light hover:text-primary transition-colors">
+            <Link href="/about" className="nav-link text-muted-foreground text-sm font-medium hover:text-primary transition-colors">
               About
             </Link>
           </nav>

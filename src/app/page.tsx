@@ -24,8 +24,8 @@ export default async function Home() {
               </h1>
 
               <p className="text-base md:text-lg text-muted-foreground mb-6 leading-relaxed">
-                Software engineer and open-source creator specializing in modern web technologies.
-                Building developer tools and UI libraries that empower better applications.
+                AI agent developer and full-stack engineer building intelligent systems and web applications.
+                Focused on LLM integration, automation tools, and creating seamless user experiences.
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -105,21 +105,21 @@ export default async function Home() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
               {featuredProjects.map((project) => (
                 <Link
                   key={project.id}
                   href={project.url}
-                  className="group block p-4 rounded-lg border border-border bg-card/80 backdrop-blur-sm hover:backdrop-blur-md hover:border-primary/30 hover:bg-card/95 hover:shadow-sm transition-all duration-300 enhanced-card"
+                  className="group block p-4 rounded-lg border border-border bg-card/80 backdrop-blur-sm hover:backdrop-blur-md hover:border-primary/30 hover:bg-card/95 hover:shadow-sm transition-all duration-300 enhanced-card flex flex-col"
                 >
-                  <h3 className="text-base font-medium mb-1 group-hover:text-primary transition-colors flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary/60 group-hover:text-primary transition-colors">
+                  <h3 className="text-base font-medium mb-2 group-hover:text-primary transition-colors flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary/60 group-hover:text-primary transition-colors flex-shrink-0">
                       <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"></path>
                       <path d="M18 9V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1Z"></path>
                     </svg>
                     {project.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground">{project.description}</p>
+                  <p className="text-sm text-muted-foreground flex-1">{project.description}</p>
                 </Link>
               ))}
             </div>
